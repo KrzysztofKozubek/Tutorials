@@ -11,8 +11,7 @@ public class Application {
         logger.setName("MyLogger");
         logger.setVersion(1.00);
 
-        UsersRepository usersRepository = new UserRepositoryImpl();
-        usersRepository.setLogger(logger);
+        UsersRepository usersRepository = new UserRepositoryImpl(logger, "Logger has been created", "Kris");
 
         User user = usersRepository.createUser("Kris");
     }

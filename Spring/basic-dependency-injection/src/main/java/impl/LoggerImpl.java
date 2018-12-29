@@ -17,6 +17,10 @@ public class LoggerImpl implements Logger {
         System.out.println(new Date() + " [" + name + " v." + version + "] : " + message);
     }
 
+    public void logInfo(String message) {
+        System.out.println(new Date() + "[INFO]" + " [" + name + " v." + version + "] : " + message);
+    }
+
     public void setName(String name) {
         this.name = name;
     }

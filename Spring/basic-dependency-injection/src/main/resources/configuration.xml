@@ -7,7 +7,16 @@
         <property name="name" value="MyLogger"/>
         <property name="version" value="1.00"/>
     </bean>
+    <!-- HERE WE HAVE TO REMEMBER ABOUT ORDER THE ARGUMENT BUT WE CAN USE NAME OR INDEX -->
+    <!-- IN CASE WHEN NAME & INDEX ARE NOT THE SAME THEN JAVA RETURN EXCEPTION DURING TRY CREATING BEAN -->
     <bean id="userRepository" class="impl.UserRepositoryImpl">
-        <property name="logger" ref="myLogger"/>
+        <constructor-arg ref="myLogger"/>
+        <constructor-arg name="message" index="1" value="Logger has been created"/>
+        <constructor-arg name="user" index="2" value="Kris"/>
+    </bean>
+
+    <bean id="someBean" class="impl.SomeBean">
+        <constructor-arg name="number" type="java.lang.Integer" value="7"/>
+        <constructor-arg name="string" type="java.lang.String" value="string"/>
     </bean>
 </beans>

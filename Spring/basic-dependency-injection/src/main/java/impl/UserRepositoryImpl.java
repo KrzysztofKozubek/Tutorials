@@ -7,12 +7,13 @@ import domain.User;
 public class UserRepositoryImpl implements UsersRepository {
     private Logger logger;
 
-    public User createUser(String name) {
-        logger.log("User has been created: " + name);
-        return new User(name);
+    public UserRepositoryImpl(Logger logger, String message, String user) {
+        this.logger = logger;
+        logger.logInfo("User: " + user + ": \"" + message + "\"");
     }
 
-    public void setLogger(Logger logger) {
-        this.logger = logger;
+    public User createUser(String name) {
+        logger.logInfo("User has been created: " + name);
+        return new User(name);
     }
 }
