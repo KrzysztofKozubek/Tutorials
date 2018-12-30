@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="myLogger" class="impl.LoggerImpl">
@@ -35,4 +37,22 @@
     <bean id="someAccount" factory-bean="account" factory-method="createAccount">
         <constructor-arg value="Kris"/>
     </bean>
+
+    <bean id="someLocale" class="java.util.Locale" factory-method="getDefault"/>
+    <bean id="someUserPIC" class="domain.User">
+        <constructor-arg name="name" value="Kris"/>
+        <constructor-arg name="locale" ref="someLocale"/>
+    </bean>
+    <bean id="someBeanPIC" class="impl.SomeBean">
+        <constructor-arg name="integer" value="25"/>
+        <constructor-arg name="string" value="Kris"/>
+        <constructor-arg name="user" ref="someUserPIC"/>
+    </bean>
+    <!--THE SAME BUT WITH NAMESPACE C & P-->
+    <!--NAMESPACE C IS USING TO USE CONSTRUCTOR-->
+    <!--NAMESPACE P IS USING TO USE SETTER METHODS-->
+    <bean id="someUserPIC2" class="domain.User" c:name="Kris" c:locale-ref="someLocale"/>
+    <bean id="someBeanPIC2" class="impl.SomeBean" p:integer="25" p:string="Kris" p:user-ref="someUserPIC2"/>
+    <!--BETTER WAY IS USING c:_0 NOT c:name // DURING COMPILATION JAVA SWITCH EACH ONE NAMES PARAMETERS OF METHOD TO VAR...-->
+    <!--EXAMPLE: <bean id="someUserPIC2" class="domain.User" c:_0="Kris" c:_1-ref="someLocale"/>-->
 </beans>

@@ -29,5 +29,10 @@ public class ApplicationSpring {
 
         Account account = context.getBean("someAccount", Account.class);
         System.out.println(account);
+
+        SomeBean someBean = context.getBean("someBeanPIC", SomeBean.class);
+        System.out.println(someBean);
+        someBean = context.getBean("someBeanPIC2", SomeBean.class);
+        System.out.println(someBean);
     }
 }

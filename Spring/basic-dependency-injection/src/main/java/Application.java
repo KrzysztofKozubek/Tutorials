@@ -40,5 +40,12 @@ public class Application {
         AccountCreator accountCreator = new AccountCreator();
         Account account = accountCreator.createAccount("Kris");
         System.out.println(account);
+
+        User user = new User("Kris", locale);
+        SomeBean someBean = new SomeBean("Kris", 25, user);
+        System.out.println(someBean);
+        user = new User("Kris", locale);
+        someBean = new SomeBean("Kris", 25, user);
+        System.out.println(someBean);
     }
 }
