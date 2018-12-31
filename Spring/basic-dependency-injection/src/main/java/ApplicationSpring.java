@@ -17,6 +17,7 @@ public class ApplicationSpring {
         SomeBean someBean = context.getBean("someBean", SomeBean.class);
 
         factoryMethod(context);
+        log4j(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -34,5 +35,10 @@ public class ApplicationSpring {
         System.out.println(someBean);
         someBean = context.getBean("someBeanPIC2", SomeBean.class);
         System.out.println(someBean);
+    }
+
+    private static void log4j(ApplicationContext context) {
+        String someString = context.getBean("someString", String.class);
+        System.out.println(someString);
     }
 }

@@ -55,4 +55,6 @@
     <bean id="someBeanPIC2" class="impl.SomeBean" p:integer="25" p:string="Kris" p:user-ref="someUserPIC2"/>
     <!--BETTER WAY IS USING c:_0 NOT c:name // DURING COMPILATION JAVA SWITCH EACH ONE NAMES PARAMETERS OF METHOD TO VAR...-->
     <!--EXAMPLE: <bean id="someUserPIC2" class="domain.User" c:_0="Kris" c:_1-ref="someLocale"/>-->
+
+    <bean id="someString" class="java.lang.String" c:_0="someString"/>
 </beans>

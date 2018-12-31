@@ -26,6 +26,7 @@ public class Application {
         SomeBean someBean = new SomeBean(7, "string");
 
         factoryMethod();
+        log4j();
     }
 
     private static void factoryMethod() {
@@ -47,5 +48,10 @@ public class Application {
         user = new User("Kris", locale);
         someBean = new SomeBean("Kris", 25, user);
         System.out.println(someBean);
+    }
+
+    private static void log4j() {
+        String someString = new String("someString");
+        System.out.println(someString);
     }
 }
