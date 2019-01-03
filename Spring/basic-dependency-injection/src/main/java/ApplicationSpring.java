@@ -1,5 +1,6 @@
 import api.UsersRepository;
 import domain.Account;
+import domain.User;
 import impl.SomeBean;
 import domain.Person;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +19,7 @@ public class ApplicationSpring {
 
         factoryMethod(context);
         log4j(context);
+        innerBean(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -40,5 +42,10 @@ public class ApplicationSpring {
     private static void log4j(ApplicationContext context) {
         String someString = context.getBean("someString", String.class);
         System.out.println(someString);
+    }
+
+    private static void innerBean(ApplicationContext context) {
+        User user = context.getBean("userWithInnerBean", User.class);
+        System.out.println(user);
     }
 }

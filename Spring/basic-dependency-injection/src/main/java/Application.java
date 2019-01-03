@@ -27,6 +27,7 @@ public class Application {
 
         factoryMethod();
         log4j();
+        innerBean();
     }
 
     private static void factoryMethod() {
@@ -53,5 +54,11 @@ public class Application {
     private static void log4j() {
         String someString = new String("someString");
         System.out.println(someString);
+    }
+
+    private static void innerBean() {
+        User user = new User(null);
+        user.setLocale(Locale.getDefault());
+        System.out.println(user);
     }
 }

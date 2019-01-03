@@ -57,4 +57,12 @@
     <!--EXAMPLE: <bean id="someUserPIC2" class="domain.User" c:_0="Kris" c:_1-ref="someLocale"/>-->
 
     <bean id="someString" class="java.lang.String" c:_0="someString"/>
+
+    <!--INNER BEAN-->
+    <bean id="userWithInnerBean" class="domain.User">
+        <constructor-arg name="name"><null/></constructor-arg>
+        <property name="locale">
+            <bean class="java.util.Locale" factory-method="getDefault"/>
+        </property>
+    </bean>
 </beans>

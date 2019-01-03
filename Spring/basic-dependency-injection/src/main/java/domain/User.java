@@ -23,6 +23,14 @@ public class User {
         this.name = name;
     }
 
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
     @Override
     public String toString() {
         return "User{" +
