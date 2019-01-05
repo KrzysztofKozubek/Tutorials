@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class User {
     private String name;
@@ -11,6 +8,8 @@ public class User {
     private List<String> listString;
     private Set<Integer> setInteger;
     private Long[] arrayLong;
+    private Map<String, Locale> localeMap;
+    private Properties settings;
 
     public User(String name) {
         this.name = name;
@@ -67,6 +66,22 @@ public class User {
         this.arrayLong = arrayLong;
     }
 
+    public Map<String, Locale> getLocaleMap() {
+        return localeMap;
+    }
+
+    public void setLocaleMap(Map<String, Locale> localeMap) {
+        this.localeMap = localeMap;
+    }
+
+    public Properties getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Properties settings) {
+        this.settings = settings;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,6 +90,8 @@ public class User {
                 ", listString=" + listString +
                 ", setInteger=" + setInteger +
                 ", arrayLong=" + Arrays.toString(arrayLong) +
+                ", localeMap=" + localeMap +
+                ", settings=" + settings +
                 '}';
     }
 }

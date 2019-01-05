@@ -69,5 +69,17 @@ public class Application {
         Long[] arrayLong = new Long[]{1L, 2L, 3L};
         User user = new User(listString, setInteger, arrayLong);
         System.out.println(user);
+
+        user = new User("Kris");
+        Map<String, Locale> localeMap = new HashMap<>();
+        Properties settings = new Properties();
+        localeMap.put("DEFAULT", Locale.getDefault());
+        localeMap.put("GERMANY", Locale.GERMANY);
+        user.setLocaleMap(localeMap);
+        settings.put("key1", "value1");
+        settings.put("key2", "value2");
+        settings.put("key3", "value3");
+        user.setSettings(settings);
+        System.out.println(user);
     }
 }

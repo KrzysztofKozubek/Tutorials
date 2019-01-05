@@ -53,5 +53,8 @@ public class ApplicationSpring {
     private static void collectionBean(ApplicationContext context) {
         User user = context.getBean("collectionSomeBean", User.class);
         System.out.println(user);
+
+        user = context.getBean("mapSomeBean", User.class);
+        System.out.println(user);
     }
 }
