@@ -10,9 +10,9 @@ import impl.UserRepositoryImpl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Application {
 
@@ -28,6 +28,7 @@ public class Application {
         factoryMethod();
         log4j();
         innerBean();
+        collectionBean();
     }
 
     private static void factoryMethod() {
@@ -59,6 +60,14 @@ public class Application {
     private static void innerBean() {
         User user = new User(null);
         user.setLocale(Locale.getDefault());
+        System.out.println(user);
+    }
+
+    private static void collectionBean() {
+        List<String> listString = Stream.of("One", "Two", "Three").collect(Collectors.toList());
+        Set<Integer> setInteger = Stream.of(1, 2, 3).collect(Collectors.toSet());
+        Long[] arrayLong = new Long[]{1L, 2L, 3L};
+        User user = new User(listString, setInteger, arrayLong);
         System.out.println(user);
     }
 }

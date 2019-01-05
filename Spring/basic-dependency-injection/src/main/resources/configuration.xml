@@ -65,4 +65,29 @@
             <bean class="java.util.Locale" factory-method="getDefault"/>
         </property>
     </bean>
+
+    <!--DI LIST SET ARRAY-->
+    <bean id="collectionSomeBean" class="domain.User">
+        <constructor-arg index="0">
+            <list>
+                <value>one</value>
+                <value>two</value>
+                <value>three</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </set>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </constructor-arg>
+    </bean>
 </beans>

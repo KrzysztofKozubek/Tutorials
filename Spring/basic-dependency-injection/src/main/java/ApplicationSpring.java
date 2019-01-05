@@ -20,6 +20,7 @@ public class ApplicationSpring {
         factoryMethod(context);
         log4j(context);
         innerBean(context);
+        collectionBean(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -46,6 +47,11 @@ public class ApplicationSpring {
 
     private static void innerBean(ApplicationContext context) {
         User user = context.getBean("userWithInnerBean", User.class);
+        System.out.println(user);
+    }
+
+    private static void collectionBean(ApplicationContext context) {
+        User user = context.getBean("collectionSomeBean", User.class);
         System.out.println(user);
     }
 }
