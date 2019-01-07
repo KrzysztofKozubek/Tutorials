@@ -21,6 +21,7 @@ public class ApplicationSpring {
         log4j(context);
         innerBean(context);
         collectionBean(context);
+        autowired(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -56,5 +57,10 @@ public class ApplicationSpring {
 
         user = context.getBean("mapSomeBean", User.class);
         System.out.println(user);
+    }
+
+    private static void autowired(ApplicationContext context) {
+        tmp.SomeBean someBean = context.getBean("someInjectedBean", tmp.SomeBean.class);
+        System.out.println(someBean);
     }
 }

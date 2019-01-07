@@ -114,4 +114,11 @@
             </map>
         </property>
     </bean>
+
+    <!--DI AUTOWIRE-->
+    <bean id="injectedBean1" class="tmp.InjectedBean" c:_0="Bean 1"/>
+    <bean id="injectedBean2" class="tmp.InjectedBean" c:_0="Bean 2"/>
+    <bean id="someInjectedBean" class="tmp.SomeBean" autowire="byName">
+        <property name="injectedBean2" ref="injectedBean1"/>
+    </bean>
 </beans>

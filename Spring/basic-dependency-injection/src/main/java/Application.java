@@ -7,6 +7,7 @@ import impl.AccountCreator;
 import impl.LoggerImpl;
 import impl.SomeBean;
 import impl.UserRepositoryImpl;
+import tmp.InjectedBean;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class Application {
         log4j();
         innerBean();
         collectionBean();
+        autowired();
     }
 
     private static void factoryMethod() {
@@ -81,5 +83,12 @@ public class Application {
         settings.put("key3", "value3");
         user.setSettings(settings);
         System.out.println(user);
+    }
+
+    private static void autowired() {
+        tmp.SomeBean someBean = new tmp.SomeBean();
+        someBean.setInjectedBean1(new InjectedBean("Bean 1"));
+        someBean.setInjectedBean2(someBean.getInjectedBean1());
+        System.out.println(someBean);
     }
 }
