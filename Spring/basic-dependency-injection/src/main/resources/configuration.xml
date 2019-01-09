@@ -115,10 +115,16 @@
         </property>
     </bean>
 
-    <!--DI AUTOWIRE-->
+    <!--DI AUTOWIRE BY_NAME-->
     <bean id="injectedBean1" class="tmp.InjectedBean" c:_0="Bean 1"/>
     <bean id="injectedBean2" class="tmp.InjectedBean" c:_0="Bean 2"/>
     <bean id="someInjectedBean" class="tmp.SomeBean" autowire="byName">
         <property name="injectedBean2" ref="injectedBean1"/>
     </bean>
+
+    <!--DI AUTOWIRE BY_TYPE & BY_CONSTRUCTOR-->
+    <bean id="userRepositoryBean" class="tmp.UserRepository"/>
+    <bean id="dictionaryRepositoryBean" class="tmp.DictionaryRepository"/>
+    <bean id="repositoryBean" class="tmp.Repositorys" autowire="byType"/>
+    <bean id="repositoryBeanConstructor" class="tmp.Repositorys" autowire="constructor"/>
 </beans>

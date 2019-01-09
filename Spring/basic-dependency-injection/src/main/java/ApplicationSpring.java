@@ -62,5 +62,8 @@ public class ApplicationSpring {
     private static void autowired(ApplicationContext context) {
         tmp.SomeBean someBean = context.getBean("someInjectedBean", tmp.SomeBean.class);
         System.out.println(someBean);
+
+        tmp.Repositorys repositorys = context.getBean("repositoryBean", tmp.Repositorys.class);
+        System.out.println(repositorys);
     }
 }
