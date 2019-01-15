@@ -127,4 +127,8 @@
     <bean id="dictionaryRepositoryBean" class="tmp.DictionaryRepository"/>
     <bean id="repositoryBean" class="tmp.Repositorys" autowire="byType"/>
     <bean id="repositoryBeanConstructor" class="tmp.Repositorys" autowire="constructor"/>
+
+    <!--INIT METHOD BEFORE CREATE BEAN-->
+    <bean id="initMethodBeforeCreateBean" class="tmp.InitMethodBeforeCreateBean" init-method="init"/>
+    <bean id="initMethodUsingInterface" class="tmp.InitMethodBeforeCreateBean"/>
 </beans>

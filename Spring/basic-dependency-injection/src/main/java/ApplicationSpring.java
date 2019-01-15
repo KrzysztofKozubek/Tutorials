@@ -22,6 +22,7 @@ public class ApplicationSpring {
         innerBean(context);
         collectionBean(context);
         autowired(context);
+        initBeforeBeanHasBeenCreated(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -65,5 +66,12 @@ public class ApplicationSpring {
 
         tmp.Repositorys repositorys = context.getBean("repositoryBean", tmp.Repositorys.class);
         System.out.println(repositorys);
+    }
+
+    public static void initBeforeBeanHasBeenCreated(ApplicationContext context) {
+        tmp.InitMethodBeforeCreateBean initMethodBeforeCreateBean = context.getBean("initMethodBeforeCreateBean", tmp.InitMethodBeforeCreateBean.class);
+        System.out.println(initMethodBeforeCreateBean);
+        initMethodBeforeCreateBean = context.getBean("initMethodUsingInterface", tmp.InitMethodBeforeCreateBean.class);
+        System.out.println(initMethodBeforeCreateBean);
     }
 }
