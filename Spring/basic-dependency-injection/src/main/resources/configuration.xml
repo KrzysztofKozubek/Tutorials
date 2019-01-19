@@ -132,4 +132,9 @@
     <!--DESTROY METHOD BEFORE DESTROY BEAN-->
     <bean id="initMethodBeforeCreateBean" class="tmp.InitMethodBeforeCreateBean" init-method="init" destroy-method="destroyMethod"/>
     <bean id="initMethodUsingInterface" class="tmp.InitMethodBeforeCreateBean"/>
+
+    <!--SCOPE-->
+    <bean id="counterBeanScope" class="scope.Counter" scope="prototype"/>
+    <bean id="bean1Scope" class="scope.Bean1" p:counter-ref="counterBeanScope"/>
+    <bean id="bean2Scope" class="scope.Bean2" p:counter-ref="counterBeanScope"/>
 </beans>
