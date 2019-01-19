@@ -1,13 +1,12 @@
 import api.UsersRepository;
 import domain.Account;
+import domain.Person;
 import domain.User;
 import impl.SomeBean;
-import domain.Person;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import scope.Bean1;
 import scope.Bean2;
-import sun.awt.AppContext;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -27,6 +26,7 @@ public class ApplicationSpring {
         autowired(context);
         initBeforeBeanHasBeenCreated(context);
         scopeBean(context);
+        importantInterface(context);
     }
 
     private static void factoryMethod(ApplicationContext context) {
@@ -97,6 +97,13 @@ public class ApplicationSpring {
         Bean2 bean2Scope = context.getBean("bean2Scope", Bean2.class);
         System.out.println(bean1Scope.getCounter());
         System.out.println(bean2Scope.getCounter());
+        System.out.println();
+    }
+
+    private static void importantInterface(ApplicationContext context) {
+        System.out.println("Important interface - ");
+        importantInterface.Bean bean = context.getBean("beanImportantInterface1", importantInterface.Bean.class);
+        System.out.println(bean);
         System.out.println();
     }
 }
