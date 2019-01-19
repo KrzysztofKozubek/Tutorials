@@ -129,6 +129,7 @@
     <bean id="repositoryBeanConstructor" class="tmp.Repositorys" autowire="constructor"/>
 
     <!--INIT METHOD BEFORE CREATE BEAN-->
-    <bean id="initMethodBeforeCreateBean" class="tmp.InitMethodBeforeCreateBean" init-method="init"/>
+    <!--DESTROY METHOD BEFORE DESTROY BEAN-->
+    <bean id="initMethodBeforeCreateBean" class="tmp.InitMethodBeforeCreateBean" init-method="init" destroy-method="destroyMethod"/>
     <bean id="initMethodUsingInterface" class="tmp.InitMethodBeforeCreateBean"/>
 </beans>

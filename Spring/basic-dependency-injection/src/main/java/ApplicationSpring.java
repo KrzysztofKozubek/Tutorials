@@ -78,7 +78,7 @@ public class ApplicationSpring {
         System.out.println();
     }
 
-    public static void initBeforeBeanHasBeenCreated(ApplicationContext context) {
+    private static void initBeforeBeanHasBeenCreated(ApplicationContext context) {
         System.out.println("Init method - init method before bean has been created");
         tmp.InitMethodBeforeCreateBean initMethodBeforeCreateBean = context.getBean("initMethodBeforeCreateBean", tmp.InitMethodBeforeCreateBean.class);
         System.out.println(initMethodBeforeCreateBean);
