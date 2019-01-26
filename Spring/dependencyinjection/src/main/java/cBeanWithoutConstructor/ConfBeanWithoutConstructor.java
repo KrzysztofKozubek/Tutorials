@@ -5,26 +5,31 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 @ComponentScan("cBeanWithoutConstructor")
 public class ConfBeanWithoutConstructor {
 
-    @Bean("connection1")
-    @Qualifier("connection1")
+    @Bean("Connection1")
     public String connection1() {
         return "Connection 1";
     }
 
-    @Bean("connection2")
-    @Qualifier("connection2")
+    @Bean("Connection2")
     public String connection2() {
         return "Connection 2";
     }
 
     @Bean("ConnectionManagerWithoutConstructor")
     public ConnectionManager connectionManager(
-            @Qualifier("connection1") String connection1,
-            @Qualifier("connection2") String connection2) {
+            @Qualifier("Connection1") String connection1,
+            @Qualifier("Connection2") String connection2) {
         return ConnectionManager.getInstance(connection1, connection2);
+    }
+
+    @Bean("ConnectionManagerWithoutConstructorUsingList")
+    public ConnectionManager connectionManager(List<String> connections) {
+        return ConnectionManager.getInstance(connections);
     }
 }

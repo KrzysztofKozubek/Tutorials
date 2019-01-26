@@ -36,6 +36,8 @@ public class App {
         System.out.println();
         ConnectionManager connectionManager = context.getBean("ConnectionManagerWithoutConstructor", ConnectionManager.class);
         System.out.println(connectionManager.getConnections());
+        connectionManager = context.getBean("ConnectionManagerWithoutConstructorUsingList", ConnectionManager.class);
+        System.out.println(connectionManager.getConnections());
         System.out.println();
     }
 }

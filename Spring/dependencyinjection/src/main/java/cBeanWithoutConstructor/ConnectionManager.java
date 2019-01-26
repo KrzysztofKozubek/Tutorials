@@ -13,7 +13,15 @@ public class ConnectionManager {
         this.connections = Arrays.asList(connections);
     }
 
+    private ConnectionManager(List<String> connections) {
+        this.connections = connections;
+    }
+
     static ConnectionManager getInstance(String... connections) {
+        return new ConnectionManager(connections);
+    }
+
+    static ConnectionManager getInstance(List<String> connections) {
         return new ConnectionManager(connections);
     }
 
