@@ -1,4 +1,4 @@
-package designPartners.builder;
+package designPatterns.builder;
 
 public class Computer {
 

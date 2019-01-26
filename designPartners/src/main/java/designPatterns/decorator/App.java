@@ -3,6 +3,10 @@ package designPatterns.decorator;
 import designPatterns.decorator.composition.DecoratorComposition;
 import designPatterns.decorator.inheritance.DecoratorInheritance;
 
+/*
+* Decorator is using when
+* is needed to add some functionality
+* */
 public class App {
 
     public static void main(String[] args) {

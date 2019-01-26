@@ -5,6 +5,11 @@ import designPatterns.builder.classic.logic.CarDirector;
 
 import static designPartners.builder.Computer.ComputerBuilder;
 
+/*
+* Builder is used when
+* process creating object is complicated
+* process creating object has many logic
+* */
 public class App {
 
     public static void main(String[] args) {
