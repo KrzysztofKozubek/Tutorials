@@ -1,6 +1,7 @@
 package designPatterns.creational.builder;
-import designPatterns.creational.builder.classic.builder.RaceCarBuilder;
-import designPatterns.creational.builder.classic.logic.CarDirector;
+
+import designPatterns.creational.builder.classic.Meal;
+import designPatterns.creational.builder.classic.MealBuilder;
 
 /*
 * Builder is used when
@@ -22,9 +23,16 @@ public class App {
         System.out.println(computer);
 
 //        classic builder
-        RaceCarBuilder raceCarBuilder = new RaceCarBuilder();
-        CarDirector carDirector = new CarDirector(raceCarBuilder);
-        carDirector.makeCar();
-        System.out.println(carDirector.getCar());
+        MealBuilder builder = new MealBuilder();
+        Meal meal;
+        meal = builder.prepareVegMeal();
+        meal.showItems();
+        System.out.println(meal.getCost());
+        meal = builder.prepareNonVegMeal();
+        meal.showItems();
+        System.out.println(meal.getCost());
+        meal = builder.prepareDoubeBurger();
+        meal.showItems();
+        System.out.println(meal.getCost());
     }
 }
