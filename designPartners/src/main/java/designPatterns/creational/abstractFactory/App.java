@@ -1,9 +1,9 @@
-package designPatterns.structural.abstractFactory;
+package designPatterns.creational.abstractFactory;
 
-import designPatterns.structural.abstractFactory.factorys.Factory;
-import designPatterns.structural.abstractFactory.factorys.impl.FactoryMagicWeapon;
-import designPatterns.structural.abstractFactory.factorys.impl.FactoryWeapon;
-import designPatterns.structural.abstractFactory.weapon.WeaponEnum;
+import designPatterns.creational.abstractFactory.factorys.Factory;
+import designPatterns.creational.abstractFactory.factorys.impl.FactoryMagicWeapon;
+import designPatterns.creational.abstractFactory.factorys.impl.FactoryWeapon;
+import designPatterns.creational.abstractFactory.weapon.WeaponEnum;
 
 /*
 * Abstract factory is used when
