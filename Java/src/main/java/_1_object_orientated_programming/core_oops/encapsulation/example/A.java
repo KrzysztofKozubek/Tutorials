@@ -1,8 +1,6 @@
-package _1_object.core_oops.encapsulation.example.another_package;
+package _1_object_orientated_programming.core_oops.encapsulation.example;
 
-import _1_object.core_oops.encapsulation.example.A;
-
-public class B {
+public class A {
 
     public void publicMethod() {
         System.out.println("public method");
@@ -25,7 +23,5 @@ public class B {
         this.protectedMethod();
         this.defaultMethod();
         this.privateMethod();
-
-        new A().publicMethod();
     }
 }

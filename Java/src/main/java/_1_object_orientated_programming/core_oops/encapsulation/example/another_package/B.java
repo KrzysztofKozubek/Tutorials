@@ -1,8 +1,8 @@
-package _1_object.core_oops.encapsulation.example;
+package _1_object_orientated_programming.core_oops.encapsulation.example.another_package;
 
-import _1_object.core_oops.encapsulation.example.another_package.B;
+import _1_object_orientated_programming.core_oops.encapsulation.example.A;
 
-public class PackageClass {
+public class B {
 
     public void publicMethod() {
         System.out.println("public method");
@@ -27,9 +27,5 @@ public class PackageClass {
         this.privateMethod();
 
         new A().publicMethod();
-        new A().protectedMethod();
-        new A().defaultMethod();
-
-        new B().publicMethod();
     }
 }

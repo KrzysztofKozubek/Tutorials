@@ -1,4 +1,4 @@
-package _1_object;
+package _1_object_orientated_programming;
 
 import java.math.BigDecimal;
 

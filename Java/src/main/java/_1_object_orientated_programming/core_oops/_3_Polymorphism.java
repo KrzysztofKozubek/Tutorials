@@ -1,4 +1,4 @@
-package _1_object.core_oops;
+package _1_object_orientated_programming.core_oops;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

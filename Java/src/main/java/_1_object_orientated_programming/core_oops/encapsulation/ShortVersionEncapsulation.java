@@ -1,4 +1,4 @@
-package _1_object.core_oops.encapsulation;
+package _1_object_orientated_programming.core_oops.encapsulation;
 
 /*
 * Access Levels:

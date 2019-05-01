@@ -1,6 +1,6 @@
-package _1_object.core_oops.encapsulation.example.another_package;
+package _1_object_orientated_programming.core_oops.encapsulation.example.another_package;
 
-import _1_object.core_oops.encapsulation.example.A;
+import _1_object_orientated_programming.core_oops.encapsulation.example.A;
 
 public class InheritAnotherPackage extends A {
 

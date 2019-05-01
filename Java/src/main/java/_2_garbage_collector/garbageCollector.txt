@@ -1,0 +1,111 @@
+GC czym jest?
+- program do oczyszczania pamięci
+- algorytm skladaja sie na:
+    - skalarne
+    - wektorowe
+
+skalarne (PHP, C++) {
+    prosty algo do zliczania ref
+    - patrzymy ile obiektow wskazuje na obiekt
+    - ref > 1, ktos korzysta
+    - ref == 0, mozna usuniac
+
+
+    wady:
+    - podczas wystapienia cyklu (for) pamiec nie zostanie zwolniona
+    - moga powstac wyspy obiektow
+
+    zalety:
+    - prostota
+}
+
+wektorowy (java) {
+
+    obiekty w pamieci sa mapowane na graf encji
+    problem z znalezieniem rootowych ele grafu (skad algo ma zaczac)
+
+    algo:
+    - przetrwaja ele gdzie
+    - obiekt jest widoczny posrednio lub nie od obiektu root
+    - lub sam jest obiektem root
+    - obiekty ktore nie zostaja usuniete zostaja zaznaczone jako "zywe"
+    - w przeciwnym wypadku usun obiekt
+
+    wady:
+    - zatrzymanie apk (na czas dzialania GC | stop the world) {
+        serial (szeregowe) zatrzymuje apk, 1 watek GC czysci
+        parllel (wielowatkowe), zatrzymuje apk, n watkow GC czysci
+        concurrent (w trakcie dzialania apk)
+        incremental (troszka pracy, sprzatanie, troszka pracy...)
+    }
+    serial:
+        w mlodej generacji dzialal przez kopiowanie obiektow (kopiowanie z yang to s0, s1)
+        w starej generacji MarkSweepCompact
+    throughtput collection:
+        yang kopuijacy (na wielu watkach)
+        old MarkSweepCompact (na wielu watkach)
+    cms:
+        mniej wydajny lecz minimalizuje pauzy GC
+        yang kopiujacy
+        old praca rownolegla z apk
+    g1:
+        wspolbierznie
+        yang kopiujacy
+        old kopiujacy (old zostal podzielony na male kawalki)
+        1. stop apk  (znalezienie rootow | klas loader systemowy)
+        2.
+
+    algo czyszczenia pamieci:
+    * po zwolnieniu pamieci, pamiec jest kompaktowana (defragmentacja uzywanej pamieci)
+    + nie pojawia sie sytuacja ze majac wolne 100MB nie mozemy stworzyc obiektu 2MB
+
+}
+
+
+Layout obiektu:
+Obiekt sklada sie z {
+    naglowka (mark header)      = 4 bytes
+    ref na klase (np. String)   = 8 bytes
+}
+
+Przy duzej ilosci obiektow typu int, long, boolean
+uzywaj typow prostych, GC nie bedzie musial sie przebijac przez
++ ref tych obiektow
++ mniej pamieci potrzebuja
+------------------------------------------------------------
+
+Wielkosci obiektow:
+- shallow (plytki rozmiar obiektu)
+- deep (ile wazy obiekt + jego dzieci)
+- retained (ile pamieci zwolnimy if usuniemy ten obiekt)
+
+- wiek liczymy w cyklach GC
+
+Layout Memory JVM:
+HIP | OFFHIP (pamiec zarzadzana natywnie)
+
+HIP {
+    Yang (mloda generacja) {
+        eden
+        0 przestrzen przetwarnikowa (survivor)
+        1 przestrzen przetwarnikowa
+    }
+    Old (stara generacja)
+
+    obiekty stworzone zostaja wrzucone do yang a po jakims czasie
+    (o ile nie zostana usuniete)
+    wrzucane sa do old'a
+}
+OFFHIP {
+    zawiera obiekty potrzebne VM do dzialania
+
+    Metaspace (nowe klasy laduja tutaj || np. wszystkie proxy do obiektow)
+    CodeCache (JIT | przyspiesza 20x)
+}
+
+GC moze byc uruchomiony w 3 trybach:
+    - minor (czysci tylko yanga)
+    - major (czysci tylko olda)
+    - full colection (wszystko)
+
+java bierze 5/8 procka na GC
