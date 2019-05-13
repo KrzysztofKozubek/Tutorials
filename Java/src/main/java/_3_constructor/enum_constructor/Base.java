@@ -3,10 +3,14 @@ package _3_constructor.enum_constructor;
 public enum Base {
     MON(false), TWO(false), SUN(true);
 
-    public static Boolean freeDay;
+    private Boolean freeDay;
 
     Base(Boolean freeDay) {
-        freeDay = freeDay;
+        this.freeDay = freeDay;
+    }
+
+    public Boolean getFreeDay() {
+        return freeDay;
     }
 }
 
@@ -19,5 +23,6 @@ enum A implements B {
 
     @Override
     public void doIt() {
+        System.out.println(Base.MON.getFreeDay());
     }
 }
