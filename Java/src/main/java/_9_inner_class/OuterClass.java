@@ -232,13 +232,15 @@ public class OuterClass {
 
 
     public static void main(String[] args) {
+        OuterClass.StaticInnerClass staticInnerClass = new StaticInnerClass();
+//        OuterClass.StaticInnerClass staticInnerClass1 = new OuterClass().new StaticInnerClass();
+        System.out.println(staticInnerClass.staticI);
+
         OuterClass outerClass = new OuterClass();
 
         OuterClass.InnerClass innerClass = new OuterClass().new InnerClass();
 //        OuterClass.InnerClass innerClass = new InnerClass();
 
-        OuterClass.StaticInnerClass staticInnerClass = new StaticInnerClass();
-//        OuterClass.StaticInnerClass staticInnerClass1 = new OuterClass().new StaticInnerClass();
 
         System.out.println(innerClass.i);
         System.out.println(staticInnerClass.i);
