@@ -57,3 +57,22 @@ class ExtendsGenericClass <T extends Number> {
 //        new ExtendsGenericClass<String>(); <- cannot do this
     }
 }
+
+class G {
+
+    void get(List<Integer> a) {
+        List<? extends Number> ln = a;
+        List<? super Integer> li = a;
+//        ln.add(new Number(12));      <- error compilation
+        li.add(new Integer(123));
+    }
+}
+
+/*
+* In generic code, the question mark (?), called the wildcard, represents an unknown type.
+* The wildcard can be used in a variety of situations: as the type of a parameter, field,
+* or local variable; sometimes as a return type (though it is better programming practice to be more specific).
+*
+* The wildcard is never used as a type argument for a generic method invocation,
+* a generic class instance creation, or a supertype.
+* */
