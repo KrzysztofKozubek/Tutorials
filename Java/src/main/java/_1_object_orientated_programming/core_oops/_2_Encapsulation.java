@@ -1,11 +1,11 @@
 package _1_object_orientated_programming.core_oops;
 
 /*
-* Encapsulation is used for access restriction to class members and methods
-* Access modifier keywords: private, default, protected, public
-*
-* Example:
-*/
+ * Encapsulation is used for access restriction to class members and methods
+ * Access modifier keywords: private, default, protected, public
+ *
+ * Example:
+ */
 
 public class _2_Encapsulation {
 

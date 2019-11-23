@@ -2,28 +2,28 @@ package _8_exceptions;
 
 
 /*
-* Exception is a problem that arises during the execution of a program
-* When an Exception occurs the normal flow of the program is disrupted and the program/Application terminates abnormally, which is not recommended, therefore, these exceptions are to be handled.
-*
-* Hierarchy:
-*
-*                    Object
-*                   Throwable
-*       Errors                     Exception
-*                   Runtime Exceptions    Other Exceptions
-*
-*
-*
-*   Example Error (hierarchy: Throwable -> Object -> java.lang)
-*   LinkageError, ThreadDeath, VirtualMachineError, AWTError
-*
-*   Example Runtime Exception (hierarchy: Exception -> Throwable -> Object -> java.lang)
-*   ArrayOfIndexException, NullPointerException, IllegalArgumentException, IndexOutOfBoundsException, SecurityException
-*
-*   Example Other Exception (hierarchy: Exception -> Throwable -> Object -> java.lang
-*   ClassNotFoundException, CloneNotSupportedException, IllegalAccessException, NoSuchMethodException, IOException
-*
-* */
+ * Exception is a problem that arises during the execution of a program
+ * When an Exception occurs the normal flow of the program is disrupted and the program/Application terminates abnormally, which is not recommended, therefore, these exceptions are to be handled.
+ *
+ * Hierarchy:
+ *
+ *                    Object
+ *                   Throwable
+ *       Errors                     Exception
+ *                   Runtime Exceptions    Other Exceptions
+ *
+ *
+ *
+ *   Example Error (hierarchy: Throwable -> Object -> java.lang)
+ *   LinkageError, ThreadDeath, VirtualMachineError, AWTError
+ *
+ *   Example Runtime Exception (hierarchy: Exception -> Throwable -> Object -> java.lang)
+ *   ArrayOfIndexException, NullPointerException, IllegalArgumentException, IndexOutOfBoundsException, SecurityException
+ *
+ *   Example Other Exception (hierarchy: Exception -> Throwable -> Object -> java.lang
+ *   ClassNotFoundException, CloneNotSupportedException, IllegalAccessException, NoSuchMethodException, IOException
+ *
+ * */
 
 import java.util.function.Consumer;
 
@@ -66,4 +66,5 @@ class MyOwnRunTimeException extends NullPointerException {
 class MyOwnOtherException extends ClassNotFoundException {
     MyOwnOtherException(Object s) {
         super(s.toString());
-    }}
+    }
+}

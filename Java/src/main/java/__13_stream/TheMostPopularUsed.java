@@ -37,29 +37,29 @@ public class TheMostPopularUsed {
     }
 
     /* Operation on stream
-    *
-    * filter - return stream with objects where filter return true
-    * map - return stream with medicated objects in this function
-    * peek - return stream with the same objects what accepted
-    * limit - return stream with limited objects
-    *
-    * */
+     *
+     * filter - return stream with objects where filter return true
+     * map - return stream with medicated objects in this function
+     * peek - return stream with the same objects what accepted
+     * limit - return stream with limited objects
+     *
+     * */
 
     /* End stream
-    *
-    * forEach - do operation for each one object
-    * count - return number of objects in stream
-    * allMatch - return information that all objects fulfills the conditions
-    * collect - return object in new type of collection
-    *
-    * */
+     *
+     * forEach - do operation for each one object
+     * count - return number of objects in stream
+     * allMatch - return information that all objects fulfills the conditions
+     * collect - return object in new type of collection
+     *
+     * */
 
     /* Stream are:
-    *
-    * - lazy
-    * - can process sequential and parallel (parallelStream)
-    *
-    * */
+     *
+     * - lazy
+     * - can process sequential and parallel (parallelStream)
+     *
+     * */
 
     private void createObject() {
         /* create primitive variable */

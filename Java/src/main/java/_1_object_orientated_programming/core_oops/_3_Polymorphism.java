@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 /*
-* Polymorphism is the concept where an object behaves differently in different situation.
+ * Polymorphism is the concept where an object behaves differently in different situation.
  * There two types of polymorphism:
  * - compile time
  * - runtime
@@ -15,9 +15,14 @@ import java.util.Random;
  * - Compile time*/
 public class _3_Polymorphism {
 
-    void main () {}
-    void main (String s) {}
-    void main (String[] args) {}
+    void main() {
+    }
+
+    void main(String s) {
+    }
+
+    void main(String[] args) {
+    }
     /*
     polymorphism compile time occurs when we overloading method
     (multiple implementation with different argument)
@@ -25,8 +30,8 @@ public class _3_Polymorphism {
 
 
     /*
-    * Runtime example
-    * */
+     * Runtime example
+     * */
 
     private List<String> list;
 

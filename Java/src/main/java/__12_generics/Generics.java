@@ -25,7 +25,7 @@ public class Generics {
 
 */
 
-class GenericClass <T> {
+class GenericClass<T> {
 
     List<T> listType = new ArrayList<>();
 
@@ -50,8 +50,8 @@ class GenericClass <T> {
     }
 }
 
-class ExtendsGenericClass <T extends Number> {
-//    its mean u can use this class with Object and subclass of it
+class ExtendsGenericClass<T extends Number> {
+    //    its mean u can use this class with Object and subclass of it
     public static void main(String[] args) {
         new ExtendsGenericClass<Integer>();
 //        new ExtendsGenericClass<String>(); <- cannot do this
@@ -69,10 +69,10 @@ class G {
 }
 
 /*
-* In generic code, the question mark (?), called the wildcard, represents an unknown type.
-* The wildcard can be used in a variety of situations: as the type of a parameter, field,
-* or local variable; sometimes as a return type (though it is better programming practice to be more specific).
-*
-* The wildcard is never used as a type argument for a generic method invocation,
-* a generic class instance creation, or a supertype.
-* */
+ * In generic code, the question mark (?), called the wildcard, represents an unknown type.
+ * The wildcard can be used in a variety of situations: as the type of a parameter, field,
+ * or local variable; sometimes as a return type (though it is better programming practice to be more specific).
+ *
+ * The wildcard is never used as a type argument for a generic method invocation,
+ * a generic class instance creation, or a supertype.
+ * */

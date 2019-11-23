@@ -1,11 +1,11 @@
 package __10_inheritance;
 
 /*
-* What is inheritance was explain in _1_object_orientated_programming.core_oops._4_Inheritance.java
-*
-* Here we have example inheritance
-*
-* */
+ * What is inheritance was explain in _1_object_orientated_programming.core_oops._4_Inheritance.java
+ *
+ * Here we have example inheritance
+ *
+ * */
 
 public class Inheritance {
 
@@ -53,6 +53,7 @@ class Heir extends Inheritance {
 interface A {
 
     void doIt();
+
     default void toDo() {
         System.out.println("A");
     }
@@ -71,7 +72,7 @@ class Impl implements A, B {
 
     @Override
     public void doIt() {
-/*        A.super.toDo(); // <- here we haven't access to interface A */
+        /*        A.super.toDo(); // <- here we haven't access to interface A */
         B.super.toDo();
         System.out.println("DO IT!");
     }

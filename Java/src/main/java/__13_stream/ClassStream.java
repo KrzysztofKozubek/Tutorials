@@ -2,18 +2,18 @@ package __13_stream;
 
 
 /*
-* Functional interface has only one abstract method
-* This interfaces r annotation @FunctionalInterface.
-*
-*
-* Lambda is sth like method in basic but this method u can storage in variable
-* Lambda contains args arrow token and body of lambda expression
-*
-*
-* Stream
-* Classes to support functional-style operations on streams of elements,
-* such as map-reduce transformations on collections.
-* */
+ * Functional interface has only one abstract method
+ * This interfaces r annotation @FunctionalInterface.
+ *
+ *
+ * Lambda is sth like method in basic but this method u can storage in variable
+ * Lambda contains args arrow token and body of lambda expression
+ *
+ *
+ * Stream
+ * Classes to support functional-style operations on streams of elements,
+ * such as map-reduce transformations on collections.
+ * */
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -36,11 +36,11 @@ public class ClassStream {
 
     private void exampleUsingStream() {
         /*
-        * Now we want to find game where:
-        * can play at least 4 person
-        * rating greater then 8
-        * price less then 150
-        * */
+         * Now we want to find game where:
+         * can play at least 4 person
+         * rating greater then 8
+         * price less then 150
+         * */
 
         Set<BoardGame> lookingForGames = games.stream()
                 .filter(game -> game.maxPlayers >= 4)
@@ -52,7 +52,7 @@ public class ClassStream {
 
     private void exampleNotUsingStream() {
         Set<BoardGame> lookingForGames = new HashSet<>();
-        for (BoardGame game: games) {
+        for (BoardGame game : games) {
             if (game.maxPlayers >= 4 && game.rating >= 8 && game.price.compareTo(BigDecimal.valueOf(150L)) < 0) {
                 lookingForGames.add(game);
             }

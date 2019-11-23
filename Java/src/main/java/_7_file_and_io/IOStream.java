@@ -73,7 +73,7 @@ public class IOStream {
             }
         }
     }
-    
+
     static void fileNavigationIO() throws IOException {
         File file = new File(pathToFile + "parent\\child\\");
         file.mkdirs();

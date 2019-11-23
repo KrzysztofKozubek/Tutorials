@@ -3,10 +3,10 @@ package _1_object_orientated_programming.core_oops;
 import java.util.List;
 
 /*
-* Composition is a special case of aggregation.
-* We r using it when object has a object
-*
-* Example: */
+ * Composition is a special case of aggregation.
+ * We r using it when object has a object
+ *
+ * Example: */
 public class _6_Composition {
 }
 
@@ -14,7 +14,9 @@ public class _6_Composition {
 class House {
     List<Room> rooms;
 }
-class Room {}
+
+class Room {
+}
 
 /* Advantages:
  * + control object

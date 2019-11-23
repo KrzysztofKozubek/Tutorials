@@ -7,27 +7,138 @@ Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm1.pdf
 
 ### Jakie są różnice pomiędzy JDK, JRE oraz JVM
 JDK (Java Development Kit) tłum. Pakiet Programisty Javy. JDK  zawiera Środowisko Uruchomieniowe Javy (tzn. JRE) oraz 
-zestaw narzędzi niezbędnych do tworzenia oraz kompilowania oprogramowania tworzonego w języku JAVA.
+zestaw narzędzi niezbędnych do tworzenia oraz kompilowania oprogramowania tworzonego w języku JAVA. (Narzędzie dla developerów)
 
 JRE (Java Runtime Environment), tłum. Środowisko Uruchomieniowe Javy. W skład JRE wchodzi Wirtualna Maszyna Javy (JVM) a także 
-zbiór klas oraz narzędzi wymaganych do uruchomienia aplikacji tworzonych w języku JAVA. 
+zbiór klas oraz narzędzi wymaganych do uruchomienia aplikacji tworzonych w języku JAVA. (Narzędzie dla klientów którzy chcą uruchomić APK)
 
 JVM (Java Virtual Machine), tłum. Wirtualna Maszyna Javy. Jest to maszyna wirtualna oraz środowisko zdolne do 
 wykonywania skompilowanego kodu aplikacji napisanej w języku Java (kod bajtowy Javy).
 
 #### Co to jest Garbage Collector?
-KRÓTKO: Garbage Collector składowa JVM odpowiadająca za zwalnianie nieużywanej pamięci.
+Wyróżniamy dwa typy algorytmów GC: 
+- skalarne
+- wektorowe
 
-W języku JAVA nie ma bezpośredniej możliwości "zwolnienia pamięci" z poziomu języka.
-**Garbage Collector** jest algorytmem za to odpowiedzialnym.
-Co jakiś czas podczas działania programu **Garbage Collector** zatrzymuje bieżący wątek i sprawdza,
-które obiekty na stercie nie mają żadnej referencji w programie.
-Jeśli nie mają referencji (znaczy, że nie są już używane) - zostają usuwane z pamięci.
+W Java, GC bierze 5/8 procka
+
+**Skalarne**: (PHP, C++, Python)
+prosty algo do zliczające ref
+- patrzymy ile obiektów wskazuje na obiekt
+- ref > 1, ktoś korzysta
+- ref == 0, można usuniać
+
+wady:
+- podczas wystapienia cyklu (sytuacja gdy 1 obiekt wskazuje na 2 i wice wersa) pamieć nie zostanie zwolniona
+- moga powstac wyspy obiektow
+
+zalety:
+- prostota
+
+**Wektorowe**
+obiekty w pamieci sa mapowane na graf encji
+
+algo działania:
+- znajduje ele rootowe (miejsce gdzie ma zacząć analize usuwania obiektów)
+- markuje wszystkie obiekty które są widoczne bezpośrenio lub pośrednio od obiektu root (w tym ele root) jako żywe
+- obiekty nieposiadające zamarkowania jako żywe zostają usunięte
+
+Przez fakt że obiekty często są tworzone i uswane mogło by dojść do sytuacji gdzie mimo 10MB wolnego miejsca w pamięci nie jesteśmy w stanie stworzyć obiektu 3MB
+
+![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+)
+
+Z powodu takich jak: 
+- większosć obiektów szybko staje się nieużyteczna z punktu widzenia aplikacji,
+- odwołania starych obiektów do nowych są bardzo rzadkie.
+
+pamięć (sterta = heap) została podzielona na: Young(Eden, Survivor0, Survivor1), Old. 
+Pozwoloło to na trzy rodzaje metod sprzątania: 
+- mino collection GC, young
+- mijor collection GC, old
+- full collection gc, all heap
+
+alorytmy kolekcji:
+- `Serial`, następuje stop the World a GC 1 wątkiem sprząta pamięć
+- `Parallel`, następuje stop the World a GC wieloma wątkiem sprząta pamięć
+- `Concurrnet`, GC sprząta w trakcie działania programu
+- `Incremental`, GC wielowątkowy, sprząta częściej w mniejszym zakresie
+
+algorytmy kolekcji:
+- kopiujacy
+
+|zachowanie |Young      |S0        |S1        |
+|-----------|-----------|----------|----------|
+|zapełniamy younga |![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) |![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+|uruchamiamy GC (sprawdzamy które obiekty są nieużywane)|![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+|kopiujemy obiekty z Young do S0|![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+|zapełniamy younga|![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) | ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+|uruchamiamy GC|![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) | ![#7d990c](https://placehold.it/15/7d990c/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+|kopiujemy obiekty o pamięć z starszą generacją|![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) | ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) |
+
+
+- serial:
+    w mlodej generacji dzialal przez kopiowanie obiektow (kopiowanie z young to s0, s1)
+    w starej generacji MarkSweepCompact
+- throughtput collection:
+    young kopuijacy (na wielu watkach)
+    old MarkSweepCompact (na wielu watkach)
+- cms:
+    mniej wydajny lecz minimalizuje pauzy GC
+    young kopiujacy
+    old praca rownolegla z apk
+- g1:
+    wspolbierznie
+    young kopiujacy
+    old kopiujacy (old zostal podzielony na male kawalki)
+    1. stop apk  (znalezienie rootow | klas loader systemowy)
+    
 Więcej: https://bottega.com.pl/pdf/materialy/jvm/jvm2.pdf
 
+#### Reprezentacja obiektu
+Layout obiektu:
+```text
+Obiekt sklada sie z {
+    naglowka (mark header)      = 4 bytes
+    ref na klase (np. String)   = 8 bytes
+}
+```
+Wielkosci obiektow:
+- `shallow` (plytki rozmiar obiektu)
+- `deep` (ile wazy obiekt + jego dzieci)
+- `retained` (ile pamieci zwolnimy gdy usuniemy ten obiekt)
+
+#### Layout Memory JVM:
+HEAP | OFFHEAP (pamiec zarzadzana natywnie)
+```text
+HEAP {
+    Young (mloda generacja) {
+        eden
+        0 przestrzen przetwarnikowa (survivor)
+        1 przestrzen przetwarnikowa
+    }
+    Old (stara generacja)
+
+    obiekty stworzone zostaja wrzucone do young a po jakims czasie
+    (o ile nie zostana usuniete)
+    wrzucane sa do old'a
+}
+OFFHEAP {
+    zawiera obiekty potrzebne VM do dzialania
+
+    Metaspace (nowe klasy laduja tutaj || np. wszystkie proxy do obiektow)
+    CodeCache (JIT | przyspiesza 20x) 
+    (przepełnienie może spowodować że nasz kod już nigdy nie zostanie skompilowany 
+    po deoptymalizacji nasz kod zwalnia)
+}
+```
+
+### Zaleta używania typów prostych
++ GC będzie miał mniej pracy (przejścia po referecjach = krótszy stop the World)
++ mniej pamieci potrzebuja
+
 #### Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
-- STOS - typy proste, wskaźniki do obiektów, wskaźniki powrotu z funkcji.
-- STERTA - Obiekty i typy złożone
+- STOS (Stack)- typy proste, wskaźniki do obiektów, wskaźniki powrotu z funkcji.
+- STERTA (Heap)- Obiekty i typy złożone
 
 #### Jakie znasz typy w JAVIE
 **TYPY PROSTE**

@@ -2,15 +2,16 @@ package _1_object_orientated_programming;
 
 import java.math.BigDecimal;
 
-public class OOP {}
+public class OOP {
+}
 
 /*
-* Object orientated programming?
-* - it mean only that, we r working on object in program.
-* - objects r reflection real thing.
-*
-* Example:
-*/
+ * Object orientated programming?
+ * - it mean only that, we r working on object in program.
+ * - objects r reflection real thing.
+ *
+ * Example:
+ */
 class Car {
 
     /*
@@ -29,12 +30,12 @@ class Car {
     private String model;
 
     /*
-    * Each one this attribute present one information about presented car.
-    * */
+     * Each one this attribute present one information about presented car.
+     * */
 
     /*
-    * Otherwise we can do sth actions:
-    * Example: */
+     * Otherwise we can do sth actions:
+     * Example: */
     void turnOn() {
 //        turn on the car
     }
@@ -45,8 +46,8 @@ class Car {
 }
 
 /*
-* Summary:
-* Object is abstract represent the real thing:
-* - Variable in the class is information about object
-* - Methods r actions what we can do on object
-*/
+ * Summary:
+ * Object is abstract represent the real thing:
+ * - Variable in the class is information about object
+ * - Methods r actions what we can do on object
+ */
