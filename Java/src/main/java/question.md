@@ -736,7 +736,8 @@ pozwala na tworzenie kodu o luźniejszych powiązaniach, łatwiejszego w testowa
 
 #### Cykl życia bean
 spring bean factory jest odpowiedzialny za zarzadzaniem zycia beanow. 
-zycie beanow sklada sie z call back metod ktore mozna podzielic na: 
+zycie beanow sklada sie z call back metod ktore mozna podzielic na:
+
 |Type               |Adnotation     |Method   |Interface                            |
 |-------------------|---------------|---------|-------------------------------------|
 |Post initialization|@PostConstruct |init()   |InitializingBean afterPropertiesSet()|
