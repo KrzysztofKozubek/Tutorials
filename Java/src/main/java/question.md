@@ -224,7 +224,7 @@ Przykład: klasa String, DataTime
 - Dzięki tym cechom są bezpieczniejsze w programowaniu wielowątkowym, kiedy wiele wątków może na raz utworzonym obiekcie pracować jednocześnie. 
 
 #### Jak pobrać pojedynczy znak z obiektu String
-uzywajac metody charAt | substring | toCharArray()[]
+uzywajac metody `charAt` | `substring` | `toCharArray()[]`
 
 #### Jak działa metoda Substring() w klasie String?
 ````java
@@ -311,11 +311,6 @@ final class A { nie można dzinedziczyć (extends)
 Iterator jest to interfejs który udostępnia metody potrzebne do iterowania poprzez każdą z kolekcji. 
 Dzięki Iteratorowi możemy przeprowadzać takie operacje jak odczyt oraz usunięcie.
 
-#### różnica pomiędzy interfejsami Iterator oraz ListIterator
-ListIterator pozwala na przeszukiwanie listy w obie strony
-ListIterator może być używany tylko do List. 
-Ponadto ListIterator pozwala również na dodawanie elementów, oraz zmianę ich wartości
-
 #### Czym różni się ArrayList od LinkedList?
 Sposobem implementacji. 
 - **ArayList** - przechowuje elementy w tablicy
@@ -371,9 +366,53 @@ Podstawowy podział:
 
 ## TYPY GENERYCZNE
 #### Co to są typy generyczne? Omów je
-https://www.tutorialspoint.com/java/java_generics.htm
+dodane do Javy 1.5, umożliwiające parametryzowanie klasy metody oraz interfejsu
+Przykład:
+```java
+class LinkedList<E> {
+    Node<E> first;
+
+    public LinkedList(){}
+
+    private static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+}
+```
+`T` może reprezentować wszystko, co nie jest prymitywem. 
+Możemy dowolnie wybrać nazwę parametru. 
+Warto jednak pamiętać, że istnieje pewna konwencja nazewnictwa i tak: 
+`E — Element`, `K — Key`, `N — Number`, `T — Type`, `V — Value`, `S`,`U`,`V` etc. — drugi, trzeci, czwarty parametr).
+
+Ograniczenie typu generycznego:
+```java
+interface A {}
+interface B extends A {}
+interface C {}
+interface Y extends B, C {}
+class D<T extends B & C> {} 
+//correct: new D<Y>()
+//incorrect: new D<A>()
+```
+
+https://docs.oracle.com/javase/tutorial/extra/generics/morefun.html
 
 ## Functional interfaces
+to interfejs posiadający 1 abstrakcyjną metodę
+
+#### Wyrażenie lambda
+wyrażenie instancji wyrażeń lmbda 
+
+#### Stream
+wprowadzenie przez java do programowania funkcyjnego. Służą do przetwarzania danych. Zawierają dane i pozwalają na opisanie co chcesz zrobić tymi danymi.
 
 
 ## WĄTKI
@@ -442,6 +481,38 @@ synchronized (o) {
     o.wait(millis); <- oczekuje na synchronizacje
 }
 ````
+
+#### Jak działa parallel() na stream
+Działa na pool ForkJoinPool (dziel i zwyciężaj)
+```java
+// Simple version 
+IntStream.range(1, 1_000)
+        .parallel()
+        .boxed()
+        .collect(Collectors.toList())
+
+// Version with set number of thread pool
+final int parallelism = 50;
+ForkJoinPool forkJoinPool = null;
+try {
+    forkJoinPool = new ForkJoinPool(parallelism);
+    final List<Integer> primes = forkJoinPool.submit(() ->
+            IntStream.range(1, 1_000)
+                    .parallel()
+                    .boxed()
+                    .collect(Collectors.toList())
+    ).get();
+    
+    
+    System.out.println(primes);
+} catch (InterruptedException | ExecutionException e) {
+    throw new RuntimeException(e);
+} finally {
+    if (forkJoinPool != null) {
+        forkJoinPool.shutdown();
+    }
+}
+```
 
 ## OOP
 #### Co to jest polimorfizm?
