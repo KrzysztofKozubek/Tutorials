@@ -427,15 +427,35 @@ class D<T extends B & C> {}
 
 https://docs.oracle.com/javase/tutorial/extra/generics/morefun.html
 
-## Functional interfaces
-to interfejs posiadający 1 abstrakcyjną metodę
-
 #### Wyrażenie lambda
-wyrażenie instancji wyrażeń lmbda 
+Dla uproszczenia można powiedzieć, że wyrażenie lambda jest metodą1. Metodą, którą możesz przypisać do zmiennej. Możesz ją także wywołać czy przekazać jako argument do innej metody.
+Na przykład wyrażenie lambda, które podnosi do kwadratu przekazaną liczbę wygląda następująco:
+
+```java
+x -> x * x
+```
+Wyrażenie lambda ma następującą składnię
+```java
+<lista parametrów> -> <ciało wyrażenia>
+```
+Jest to instancja dowolnego interfejsu funkcyjnego.
+
+## Functional interfaces
+to interfejs posiadający 1 abstrakcyjną metodę. Oznacza się interfejsem `@FunctionalInterface`.
+Wiekszość tych interfejsów znajduje się w pakiecie `java.util.function`:
+- `Function<T, R>` przyjmuje `T` i zwraca `R` metodą `apply()`
+- `Consumer<T>` 
+- `Predicate<T>` przyjmuje `T` i zwraca flagę metodą `test()`
+- `Supplier<T>` nie przymuje i zwraca `T` metodą `get()`
+- `UnaryOperatot<T>` przyjmuje i zwraca `T`
 
 #### Stream
 wprowadzenie przez java do programowania funkcyjnego. Służą do przetwarzania danych. Zawierają dane i pozwalają na opisanie co chcesz zrobić tymi danymi.
-
+Strumienie wykorzystują wzorzec łączenie metod (method chaining), zwanym także płynnym interfejsce, (fluent interface)
+Strumienie możemy podzielić na trzy typy:
+- tworzenia strumienia
+- przetwarzania danych wew strumienia
+- zakończenie strumienia
 
 ## WĄTKI
 #### Co to są wątki? Co to są procesy?
