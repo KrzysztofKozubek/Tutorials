@@ -200,11 +200,16 @@ większy poziom izolacji, tym większy koszt.
 
 | Poziom izolacji   |  dirty read   | unrepeatable read | phantoms  |   
 | ----------------- | ------------- | ----------------- | --------- |
-| READ UNCOMMITTED  |       +       |         +         |      +    | 
-| READ COMMITED     |     **-**     |         +         |      +    | 
-| REPEATABLE READ   |     **-**     |         --        |      +    | 
-| SERIALIZABLE      |     **-**     |       **-**       |    **-**  | 
-| SNAPSHOT          |     **-**     |       **-**       |    **-**  | 
+| READ UNCOMMITTED  |       ✓       |         ✓         |      ✓    | 
+| READ COMMITED     |       x       |         ✓         |      ✓    | 
+| REPEATABLE READ   |       x       |         x         |      ✓    | 
+| SERIALIZABLE      |       x       |         x         |      x    | 
+| SNAPSHOT          |       x       |         x         |      x    | 
+| - [x] This is a complete item | - [x] | [x] |
+| - [ ] This is a complete item | - [ ] | [ ] |
+
+- [x] This is a complete item
+- [ ] This is an incomplete item
 
 #### SERIALIZABLE vs SNAPSHOT
 `SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
