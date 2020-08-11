@@ -204,12 +204,19 @@ większy poziom izolacji, tym większy koszt.
 | READ COMMITED     |       x       |         ✓         |      ✓    | 
 | REPEATABLE READ   |       x       |         x         |      ✓    | 
 | SERIALIZABLE      |       x       |         x         |      x    | 
-| SNAPSHOT          |       x       |         x         |      x    | 
-| - [x] This is a complete item | - [x] | [x] |
-| - [ ] This is a complete item | - [ ] | [ ] |
+| SNAPSHOT          |       x       |         x         |      x    |
 
-- [x] This is a complete item
-- [ ] This is an incomplete item
+~~this~~ 
+/play yeah
+:clock530:
+:clock6:
+:clock630:
+:clock7:
+:clock730:
+:clock8:
+:clock830:
+:clock9:
+:clock930:
 
 #### SERIALIZABLE vs SNAPSHOT
 `SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
