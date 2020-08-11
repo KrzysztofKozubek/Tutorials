@@ -199,11 +199,11 @@ większy poziom izolacji, tym większy koszt.
 
 | Poziom izolacji   |  dirty read   |  lost update  | phantoms  |   
 | ----------------- | ------------- | ------------- | --------- |
-| READ UNCOMMITTED  |      +        |      +        |     +     | 
-| READ COMMITED     |      -        |      +        |     +     | 
-| REPEATABLE READ   |      -        |      -        |     +     | 
-| SERIALIZABLE      |      -        |      -        |     -     | 
-| SNAPSHOT          |      -        |      -        |     -     | 
+| READ UNCOMMITTED  |       +       |       +       |      +    | 
+| READ COMMITED     |     **-**     |       +       |      +    | 
+| REPEATABLE READ   |     **-**     |     **-**     |      +    | 
+| SERIALIZABLE      |     **-**     |     **-**     |    **-**  | 
+| SNAPSHOT          |     **-**     |     **-**     |    **-**  | 
 
 #### SERIALIZABLE vs SNAPSHOT
 `SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
