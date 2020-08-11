@@ -206,17 +206,6 @@ większy poziom izolacji, tym większy koszt.
 | SERIALIZABLE      |       x       |         x         |      x    | 
 | SNAPSHOT          |       x       |         x         |      x    |
 
-~~this~~ 
-/play yeah
-:clock530:
-:clock6:
-:clock630:
-:clock7:
-:clock730:
-:clock8:
-:clock830:
-:clock9:
-:clock930:
 
 #### SERIALIZABLE vs SNAPSHOT
 `SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
