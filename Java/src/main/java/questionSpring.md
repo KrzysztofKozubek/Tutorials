@@ -193,17 +193,18 @@ phantoms
 zatwierdzeniu (commit), występują wówczas anomalie: non-repetablereads, phantoms
 - `repeatable_read` – pobrane dane są blokowane, więc kolejne odczyty
 zwracają te same dane, możliwe anomalie: phantoms
-- `serializable` – transakcje serializowane, nie występują żadne anomalie
+- `serializable` – transakcje serializowane, nie występują żadne anomalie.
+
 Domyślny poziom izolacji zależy od konkretnej bazy danych. Oczywiście im
 większy poziom izolacji, tym większy koszt.
 
-| Poziom izolacji   |  dirty read   |  lost update  | phantoms  |   
-| ----------------- | ------------- | ------------- | --------- |
-| READ UNCOMMITTED  |       +       |       +       |      +    | 
-| READ COMMITED     |     **-**     |       +       |      +    | 
-| REPEATABLE READ   |     **-**     |     **-**     |      +    | 
-| SERIALIZABLE      |     **-**     |     **-**     |    **-**  | 
-| SNAPSHOT          |     **-**     |     **-**     |    **-**  | 
+| Poziom izolacji   |  dirty read   | unrepeatable read | phantoms  |   
+| ----------------- | ------------- | ----------------- | --------- |
+| READ UNCOMMITTED  |       +       |         +         |      +    | 
+| READ COMMITED     |     **-**     |         +         |      +    | 
+| REPEATABLE READ   |     **-**     |         --        |      +    | 
+| SERIALIZABLE      |     **-**     |       **-**       |    **-**  | 
+| SNAPSHOT          |     **-**     |       **-**       |    **-**  | 
 
 #### SERIALIZABLE vs SNAPSHOT
 `SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
