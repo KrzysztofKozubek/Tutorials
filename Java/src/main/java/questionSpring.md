@@ -174,6 +174,8 @@ możemy spodziewać się różnych anomalii w spójności danych:
 - `dirty read` – T1 odczytuje dane zmienione przez T2, nawet gdy w
 późniejszym czasie T2 jest wycofana. W efekcie T1 „widzi” nieistniejące
 dane
+- `lost update` - T1 i T2 czyta dane, następnie T1 modyfikuje zmiany a 
+kolejnie T2 modyfikuje te same dane. Modyfikacja T1 jest niewidoczna
 - `unrepeatable read` – T1 wykonuje kilkukrotnie to samo zapytanie, ale
 otrzymuje inne dane (w sensie taka sama ilość wierszy, ale inne wartości
 w wierszach). Dzieje się to z powodu tego, że T2 modyfikuje te dane
@@ -194,6 +196,18 @@ zwracają te same dane, możliwe anomalie: phantoms
 - `serializable` – transakcje serializowane, nie występują żadne anomalie
 Domyślny poziom izolacji zależy od konkretnej bazy danych. Oczywiście im
 większy poziom izolacji, tym większy koszt.
+
+| Poziom izolacji   |  dirty read   |  lost update  | phantoms  |   
+| ----------------- | ------------- | ------------- | --------- |
+| READ UNCOMMITTED  |      +        |      +        |     +     | 
+| READ COMMITED     |      -        |      +        |     +     | 
+| REPEATABLE READ   |      -        |      -        |     +     | 
+| SERIALIZABLE      |      -        |      -        |     -     | 
+| SNAPSHOT          |      -        |      -        |     -     | 
+
+#### SERIALIZABLE vs SNAPSHOT
+`SERIALIZABLE` - blokuje wiersze, aż do momentu zakończenia transakcji.<BR>
+`SNAPSHOT` - wykorzystuje technologie wersjonowania wierszy
 
 ### Propagacja transakcji 
 Jest to zachowanie transakcji w przypadku wywołania metody wewnątrz innej transakcji (np. Klasa A metoda a wywoluje bean klasy B metody b).
