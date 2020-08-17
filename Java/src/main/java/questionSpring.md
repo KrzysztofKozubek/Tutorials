@@ -265,3 +265,125 @@ czynienia z nowym, osobnym cache pierwszego poziomu (L1 cache).
 
 
 
+### Dynamiczne proxy:
+Porxy czyli pośrednik. Może on posiadać trzy role:
+* filtrowanie (filtrowanie nieautoryzowanych rządań)
+* zapamiętywanie odpowiedzi (zwracanie pliki wcześniej rządanego)
+* load balancer (rozkładanie ruchu sieciowego na gr. serwerów)
+
+Jest to przechwycenie wywołania metody na danym obiekcie i udekorowanie go.
+
+Zastosowanie:
+* logger (logowanie wywołanych metod)
+* zmiana zachowania zamknietego kodu (zmiana działania metod w bibliotece)
+
+```
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class DynamicProxyApp {
+    public static void main(String[] args) {
+        System.out.println("Without proxy:");
+        System.out.println("---------------------");
+        Car car = new CarImpl();
+        car.runEngine("Driver");
+        System.out.println("---------------------");
+        System.out.println("\nWith proxy:");
+        System.out.println("---------------------");
+        Car carProxy = (Car) Proxy.newProxyInstance(Car.class.getClassLoader(),
+                new Class[]{Car.class},
+                new CarInvocationHandler(new CarImpl()));
+        carProxy.runEngine("Driver");
+        System.out.println("---------------------");
+    }
+    interface Car {
+        void runEngine(String message);
+    }
+    static class CarImpl implements Car {
+        @Override
+        public void runEngine(String who) {
+            System.out.println(String.format("Engine is running. [%s] run it.", who));
+        }
+    }
+    static class CarInvocationHandler implements InvocationHandler {
+        private final Object original;
+        CarInvocationHandler(Object original) {
+            this.original = original;
+        }
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            try {
+                System.out.println(String.format(">> before method: [%s]", method.getName()));
+                return method.invoke(original, args);
+            } finally {
+                System.out.println(String.format("<< after method: [%s]", method.getName()));
+            }
+        }
+    }
+}
+```
+
+### Programowanie aspektowe:
+Programowanie zorientowane aspektowo to sposób programowania, który pozwala oddzielić pewne fragmenty kodu od siebie, poprawiając dzięki temu modularność tworzonego programu.</BR>
+Można na to spojrzeć tak, że programowanie aspektowe pozwala wprowadzić dodatkową warstwę do kodu, który tworzymy i zwykle ta warstwa jest wyraźnie odseparowana od właściwego kodu.
+
+
+#### Jak działają aspekty?
+
+Aspekty działają poprzez dodanie klasy `proxy` do właściwego wywołania metody z danej klasy.
+
+Normalne wywołanie metody z osobnej klasy wygląda mniej więcej tak:
+```java 
+klasa klienta -> klasa właściwa
+```
+Mechanizm AOP dodaje pomiędzy klasą klienta a klasą właściwą dodatkową klasę `proxy`. Tak wygląda to w uruchomionej aplikacji (runtime):
+```java 
+klasa klienta -> klasa proxy -> klasa właściwa
+```
+#### Jak uruchomić 
+
+Dodać dependencje: `org.springframework.boot:spring-boot-starter-aop`
+
+Do głównej klasy uruchomieniowej dodać: `@EnableAspectJAutoProxy(proxyTargetClass=true)`
+
+Parametr `proxyTargetClass=true` odpowiada za to, że mechanizm AOP będzie mógł utworzyć klasę proxy dla klasy. Domyślnie AOP w Springu tworzy proxy korzystając z mechanizmu `JDK dynamic proxies`. Mechanizm ten tworzy proxy na podstawie interfejsu. Jeśli nie chcesz tworzyć dodatkowo interfejsu wystarczy, że ustawisz `proxyTargetClass=true`. Dzięki temu ustawieniu Spring AOP tworzy klasę proxy z użyciem biblioteki `CGLIB`.
+
+#### Jak korzystać
+
+Mamy jakiś dowolny komponent. Może to być klasa oznaczona adnotacją `@Component`, `@Service`, `@Controller`, `@Repository` (ogólnie bean springowy).
+
+```java
+package path.to.class; 
+
+@Componet
+class MyClass {
+  public void do() {
+    //impl
+  }
+}
+```
+
+```java
+@Aspect
+@Component
+public class LoggingAspect {
+ 
+  @Around("execution(* path.to.class..*(..))")
+  public Object doSomethingAdice(ProceedingJoinPoint joinPoint) throws Throwable {
+    System.out.println(":: start ::");
+    Object proceed = joinPoint.proceed();
+    System.out.println(":: end ::");
+    return proceed;
+  }
+}
+```
+Nazewnictwo:
+* Pointcut: `execution(* path.to.class..*(..))`
+* Advice : `ProceedingJoinPoint joinPoint`
+
+
+#### Kiedy użyć:
+* wiciągniecie technicznego kodu (tranzakcje)
+* logger
+
