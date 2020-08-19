@@ -9,6 +9,21 @@ TL DR; Trzeba zrobić Group BY po kolumnie z działami.
 - Standardowo ```count(*)```, ale można szybciej: 
 - ```count(1);``` działa zdecydowanie szybciej, bo nie wyciąga wiersza za każdym razem
 
+#### Blokady na bazie:
+* Blokowanie `pesymistyczne` 
+    * Zablokuj dane 
+    * Odczytaj dane 
+    * Zmień dane 
+    * Wyślij zmianę 
+    * Odblokuj dane 
+    
+* Blokowanie `optymistyczne` 
+    * Odczytaj dane 
+    * Zmień dane 
+    * Wyślij zmianę 
+    * sprawdzając czy ktoś nie zmienił obiektu 
+    * Jeśli dane zostały zmienione w międzyczasie - wyjąte
+
 #### Co to jest Primary key
 Są to attrybyty identyfikace dany rekord w sposób jednoznaczny.
 Taki klucz nie może przyjmować wartości null (wyjątek non clustered).
@@ -19,6 +34,11 @@ Często tworzy się nowa kolumnę która jest samouzupelniana przez bazę danych
 #### Omów Unique index
 Indeks można założyć na jedną lub więcej kolumn.
 Unique informuje nas o tym że dane wartości się nie powtórzą w tabeli.
+
+```sql
+CREATE UNIQUE INDEX __index__
+ON __table__ (__column__);
+```
 
 #### Czym się różnią Clustered Index i Non Clustered index
 #### Kiedy używać indeksów w bazie danych a kiedy nie powinno się?
@@ -248,3 +268,247 @@ SET __column1__ = __val1__,
 DELETE FROM __table__
 WHERE {CONDITION};
 ```
+
+
+
+
+# JPA / Hibernate
+
+JPA to standard z grupy tzw. ORM (ang. Object-Relational Mapping).
+
+Aby korzystać z JPA będziemy potrzebowali tzw. providera — biblioteki, która dostarcza implementację standardu JPA (JPA to tylko zbiór kontraktów, tzn. opisów, jakie funkcje mają być realizowane i w jaki sposób — sami możemy wybrać lub stworzyć implementację, która będzie się tym zajmowała).
+
+
+## Adnotacje
+
+```java
+@Entity
+@Table(name="PRODUCTS")
+@Getter
+@Setter
+public class Product {
+
+    @Id // PK
+    @GeneratedValue 
+    /*
+    strategy:
+    TABLE - przechowywane w osobnej tabeli (przed włożeniem dokonywany jest odczyt) 
+    IDENTITY – AUTO-INCREMENT przez baze
+    SEQUENCE – systemowy sekwenser
+    AUTO – automatycznie jedno z powyższych
+
+    generator: name of primary key
+    */
+    private Long id;
+
+    @Size(min = 1, max = 10)
+    @Pattern("^{0-9}{9}$")
+    @Column(name = "__column__")
+    private String column;
+
+
+    @Transient
+    private String noSaved;
+}
+```
+
+Relacje:
+Movie
+
+| id | name | movie_details_id |
+|----|------|------------------|
+| 1  | Dark |        1         |
+
+Movie Details
+
+| id | genre  | lenght |
+|----|--------|--------|
+| 1  | Horror |  152   |
+
+* `OneToOne`:
+  * jednokierunkowa:
+```java
+// Movie.class
+@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+private MovieDetails MovieDetails;
+```
+  * dwukierunkowa:
+```java
+// MovieDetails.class
+@OneToOne(fetch = FetchType.LAZY)
+private Movie movie;
+
+// Movie.class
+public void setMovieDetails(MovieDetails movieDetails) {
+  movieDetails.setMovie(this);
+  this.movieDetails = movieDetails;
+}
+```
+
+* `OneToMany` / `ManyToOne`:
+  * jednokierunkowa:
+```java
+// Movie.class
+@OneToMany(cascade = CascadeType.ALL)
+private final List<Showing> showings = new ArrayList<>();
+
+public void addShowing(Showing showing) {
+  showings.add(showing);
+}
+ 
+public void removeShowing(Showing showing) {
+  showings.remove(showing);
+}
+
+// Showing.class
+@ManyToOne(fetch = FetchType.LAZY)
+private Movie movie;
+```
+  * dwukierunkowa:
+ ```java
+ // Movie.class
+ public void addShowing(Showing showing) {
+  showings.add(showing);
+  showing.setMovie(this);
+}
+ 
+public void removeShowing(Showing showing) {
+  showings.remove(showing);
+  showing.setMovie(null);
+}
+```
+* `ManyToMany`:
+  * jednokierunkowa:
+```java
+// Movie.class
+@ManyToMany
+private final List<Category> categories = new ArrayList<>();
+
+public void addCategory(Category category) {
+  this.categories.add(category);
+}
+ 
+public void removeCategory(Category category) {
+  this.categories.remove(category);
+}
+```
+  * dwukierunkowa:
+```java
+// Category.class
+@ManyToMany
+private final List<Movie> movies =  new ArrayList<>();
+ 
+public void addMovie(Movie movie) {
+  movies.add(movie);
+}
+ 
+public void removeMovie(Movie movie) {
+  movies.remove(movie);
+}
+
+// Movie.class
+public void addCategory(Category category) {
+  this.categories.add(category);
+  category.addMovie(this);
+}
+ 
+public void removeCategory(Category category) {
+  this.categories.remove(category);
+  category.removeMovie(this);
+}
+```
+
+## Fetch
+Argument fetch określa sposób, w jaki powiązane obiekty są pobierane z bazy. Przyjmuje enum FetchType, który ma dwie wartości:
+* `EAGER` – obiekty powiązane z użyciem tego FetchType będą automatycznie wyciągane z bazy przez Hibernate, przy wczytaniu obiektu bazowego
+* `LAZY` – obiekty z FetchType.LAZY nie będą pobierane od razu razem z obiektem bazowym, a dopiero wtedy, gdy ich zażądamy.
+
+Generalnie rzecz biorąc, `FetchType.EAGER` powinien być używany jak najrzadziej, tylko jeśli jesteśmy pewni, że zawsze będziemy pobierać zależności dla obiektu, na przykład gdy przesyłamy do klienta agregaty złożone z obiektu i jego zależności. Niepotrzebne użycie `EAGER` znacznie zwiększy obciążenie bazy danych, która będzie zwracać dodatkowo aplikacji niepotrzebne obiekty.
+
+Warto pamiętać, że o ile `@OneToMany` i `@ManyToMany` mają domyślnie `FetchType.LAZY`, to jednak `@OneToOne` i `@ManyToOne` mają domyślnie zdefiniowany `FetchType.EAGER`, co nie zawsze jest optymalne.
+
+## Cascade
+Kaskadowanie operacji na encjach oznacza, że jeśli wykonamy konkretną operację na obiekcie to obiekty powiązane relacją też zostaną poddane tej operacji. Jeśli chcemy je włączyć, podajemy do argumentu cascade enum CascadeType, który przyjmuje wartości:
+
+* `PERSIST` (INSERT) – `persist()`, czyli zapisywaniu nowego obiektu w bazie
+* `MERGE`   (UPDATE) – `merge()`, czyli modyfikowaniu obiektu już istniejącego w bazie
+* `REMOVE`  (DELETE) – `remove()`, czyli usuwaniu obiektu z bazy
+* `DETACH`  – `detach()`, która wyrzuca dany obiekt z puli obiektów oczekujących na zapisanie w bazie
+* `REFRESH` – `refresh()`, służącej do ponownego załadowywania obiektów z bazy
+* `ALL` – kaskada dla wszystkich powyższych operacji
+
+Wszystkie wytłuszczone metody należą do klasy EntityManager – interfejsu JPA służącego do komunikacji z bazą danych. Jeśli używamy JpaRepository z frameworka Spring, używa on wszystkich powyższych metod, oprócz `detach()` i `refresh()`, jednak tych również używa się w miarę potrzeby, dopisując własne metody do implementacji interfejsu. Domyślnie we wszystkich typach relacji kaskadowanie jest wyłączone
+
+## Problemy
+
+* Problem nieskończonej rekursji:
+```java
+// Movie.class
+@ManyToMany
+private final List<Category> categories = new ArrayList<>();
+// Category.class
+@ManyToMany
+private final List<Movie> movies =  new ArrayList<>();
+```
+Rozwiązanie, dodać adnotacje `@JsonIgnore` do jednego z pól.
+
+
+
+## Cache
+
+Level 1 and Level 2 cache
+```
+       L1
+-----------------     ------------------      |----|
+| transaction 1 | ->  | entity manager |  ->  |    |
+-----------------     ------------------      |    |
+                                              | L2 |
+-----------------     ------------------      |    |
+| transaction 2 | ->  | entity manager |  ->  |    |
+-----------------     ------------------      |----|
+```
+* `L1`: cache transakcji/sesji, który nie jest dzielona miedzy wątkami
+* `L2`: cache ogóla, dzielona miedzy transakcjami
+
+Cache'owanie obiektów odbywa się za pomocą adnotacji `@Cacheable / @Cache`
+
+Strategie buforowania: 
+* `ALL` : wszystkie encje niezależnie od konfiguracji (adnotacji @Cacheable) będą umieszczone w Cache L2. 
+* `NONE` : żadna z encji nie trafi do bufora L2. 
+* `ENABLE_SELECTIVE`: w buforze zostaną umieszczone tylko te encje które są oznaczone @Cacheable(true) lub @Cacheable 
+* `DISABLE_SELECTIVE`: Buforuj wszystkie z wyjątkiem encji oznaczonych @Cacheable(false) 
+* `UNSPECIFIED`: ustawienie nie określa polityki buforowania. Zostanie użyta domyślna strategia 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

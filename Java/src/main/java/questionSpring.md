@@ -387,3 +387,28 @@ Nazewnictwo:
 * wiciągniecie technicznego kodu (tranzakcje)
 * logger
 
+
+#### Łapanie wyjątków w spring:
+
+```java
+public class AppException extends RuntimeException  {
+
+    private ExceptionCode code;
+}
+
+public class ErrorDTO {
+
+    private String code;
+
+    private String message;
+}
+
+@RestControllerAdvice
+public class AppExceptionHandler {
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ErrorDTO> exceptionHandler(AppException ex, Locale locale) {
+        return new ResponseEntity<>(new ErrorDTO(ex.getCode(), ex.getMessage()), status);
+    }
+}
+```
