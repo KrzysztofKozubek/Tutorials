@@ -1,0 +1,158 @@
+import agency.summer.common.logger.Loggable;
+import agency.summer.erkado.authentication.service.AuthenticationService;
+import agency.summer.erkado.notifications.websocket.model.Greeting;
+import agency.summer.erkado.notifications.websocket.model.HelloMessage;
+import agency.summer.erkado.notifications.websocket.service.GreetingService;
+import agency.summer.erkado.user.model.UserContext;
+import java.security.Principal;
+import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.util.HtmlUtils;
+
+@Controller
+@AllArgsConstructor
+public class GreetingController implements Loggable {
+
+    public static final String NOTIFICATION_REGISTER = "/notification/register";
+    public static final String WS_MESSAGE_TRANSFER_DESTINATION = "/queue/notification";
+
+    private final AuthenticationService authService;
+
+    private final GreetingService greetingService;
+
+    @MessageMapping(NOTIFICATION_REGISTER)
+    @SendToUser(WS_MESSAGE_TRANSFER_DESTINATION)
+    public Greeting greeting(@Payload HelloMessage message,
+                             Principal principal,
+                             @Header("simpSessionId") String sessionId) throws Exception {
+        logger().info("Received greeting message {} from {}", message, principal.getName());
+        logger().info(Optional.ofNullable(authService.getAuthenticatedUser()).map(UserContext::getId).get());
+        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getLogin() + " " + message.getPassword()) + "!");
+    }
+}
+
+
+
+
+
+
+package agency.summer.erkado.notifications.websocket.service;
+
+import agency.summer.common.logger.Loggable;
+import agency.summer.erkado.user.model.UserContext;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.stereotype.Service;
+
+@Data
+@Service
+@AllArgsConstructor
+public class WebSocketServiceImpl implements WebSocketService, Loggable {
+
+    public static final String WS_MESSAGE_TRANSFER_DESTINATION = "/queue/notification";
+
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    private final SimpUserRegistry simpUserRegistry;
+
+    private final SessionRegistry sessionRegistry;
+
+    @Override
+    public void sendMessage(Long userId, Object objectToSend) {
+        List<Object> allPrincipals = sessionRegistry.getAllPrincipals();
+        Map<Long, String> userContexts = getLoggedUsers(allPrincipals);
+        Optional<String> user = Optional.ofNullable(userContexts.get(userId));
+
+        user.ifPresent(userName -> simpMessagingTemplate.convertAndSendToUser(
+            userName,
+            WS_MESSAGE_TRANSFER_DESTINATION,
+            objectToSend
+        ));
+    }
+
+    private Map<Long, String> getLoggedUsers(List<Object> allPrincipals) {
+        return allPrincipals.stream()
+            .filter(principal -> principal instanceof UserContext)
+            .map(principal -> (UserContext) principal)
+            .collect(Collectors.toMap(UserContext::getId, UserContext::getLogin));
+    }
+}
+
+
+
+
+
+
+
+public interface WebSocketService {
+
+    void sendMessage(Long userId, Object objectToSend);
+}
+
+
+
+
+
+
+
+
+
+
+import agency.summer.erkado.notifications.websocket.connector.CustomHandshakeHandler;
+import agency.summer.erkado.notifications.websocket.connector.HttpHandshakeInterceptor;
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
+import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+
+@Configuration
+@AllArgsConstructor
+@EnableWebSocketMessageBroker
+public class WebSocketConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+
+
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/user", "/topic", "/queue");
+        config.setApplicationDestinationPrefixes("/app");
+    }
+
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/erkado-ws")
+            .setAllowedOrigins("*")
+//            .addInterceptors(new HttpHandshakeInterceptor(containerWebSocket))
+//            .setHandshakeHandler(new CustomHandshakeHandler(containerWebSocket))
+            .withSockJS();
+    }
+
+    @Override
+    protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
+        String[] roles = {"ADMIN", "APS", "DISTRIBUTOR", "ERKADO", "SALESMAN"};
+        messages.anyMessage().authenticated();
+        messages.simpSubscribeDestMatchers("/**").authenticated()
+            .simpDestMatchers("/erkado-ws/**").authenticated();
+    }
+
+    @Override
+    protected boolean sameOriginDisabled() {
+        return true;
+    }
+}
+
+

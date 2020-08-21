@@ -481,20 +481,84 @@ Strategie buforowania:
 
 
 
+## Dziedziczenie
 
+```java
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE) // JOINED | TABLE_PER_CLASS
+@DiscriminatorColumn(name="WEAPON_TYPE",discriminatorType=DiscriminatorType.STRING)
+public abstract class Weapon  {
+ 
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    private Long id;
+         
+    private String name;   
+     
+    // Getterki i setterki ominiete 
+}
+ 
+@Entity
+@DiscriminatorValue("StingWeaponDiscValue")
+public class StingWeapon extends Weapon {
+ 
+      private int stingAttack;
+ 
+      // Getterki i setterki ominiete
+}
+ 
+@Entity
+@DiscriminatorValue("RangeWeaponDiscValue")
+public class RangeWeapon extends Weapon {
+ 
+      private int rangeAttack;
+ 
+      // Getterki i setterki ominiete
+}
+```
+* `SINGLE_TABLE`: 
+Zostanie stworzona tylko 1 tabela łącząca wszystkie trzy klasy
 
+| id | name  | sting_attack | range_attack |
+|----|-------|--------------|--------------|
+| 10 | sword |     120      |      0       |
 
+* `JOINED`:
+Zostanią stworzone trzy tabele połączone relacją
 
+Weapon
 
+| id | name  |
+|----|-------|
+| 10 | sword |
 
+StingWeapon
 
+| id | sting_attack |
+|----|--------------|
+| 10 |     120      |
 
+RangeWeapon
 
+| id | range_attack |
+|----|--------------|
+| 10 |      0       |
 
+* `TABLE_PER_CLASS`:
+Zostaną stworzone dwie tabele, odzorujące klasy
 
+StingWeapon
 
+| id | sting_attack | name  |
+|----|--------------|-------|
+| 10 |     120      | sword |
 
+RangeWeapon
 
+| id | range_attack | name  |
+|----|--------------|-------|
+| 10 |      0       | sword |
 
 
 
