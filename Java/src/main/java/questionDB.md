@@ -561,15 +561,15 @@ RangeWeapon
 | 10 |      0       | sword |
 
 
+## load() vs get() 
 
-
-
-
-
-
-
-
-
+| key | load | get |
+|-----|------|-----|
+| Basic | Służy również do pobierania danych z bazy danych dla danego identyfikatora | Służy do pobierania danych z bazy danych dla podanego identyfikatora |
+| Null Object | Wyrzuci obiekt nie znaleziono wyjątku | Nie znaleziono obiektu dla podanego identyfikatora, a następnie zwróci obiekt o wartości null |
+| Lazy or Eager loading | Zawsze zwraca obiekt proxy, więc ta metoda jest leniwym ładowaniem obiektu | Zwraca w pełni zainicjowany obiekt, więc ta metoda chętnie ładuje obiekt |
+| Performance | Jest nieco szybszy. | Jest wolniejszy niż load (), ponieważ zwraca w pełni zainicjowany obiekt, który ma wpływ na wydajność aplikacji |
+| Use Case | Jeśli jesteś pewien, że obiekt istnieje, użyj metody load () | Jeśli nie jesteś pewien, czy obiekt istnieje, użyj metody get () |
 
 
 
