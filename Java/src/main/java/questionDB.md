@@ -418,6 +418,14 @@ public void removeCategory(Category category) {
 }
 ```
 
+| Relacja | Wiązanie | Encja 1   | Encja 2 | Lokalizacja FK |
+|---------|----------|-----------|---------|----------------|
+|   1-1   |   1-way  | @OneToOne |    -    | Entity 1       |
+|   1-1   |   2-way  | @OneToOne | @OneToOne(mappedBy = "") | Entity 1 | 
+|   1-N   |   1-way  | @OneToMany @JoinedColumn(name = "") | - | Entity 2 |
+|   1-N   |   2-way  | @OneToMany(mappedBy = "") | @ManyToOne | Entity 2 |
+|   M-N   |   2-way  | @ManyToMany | @ManyToMany(mappedBy = "") | Nowa tabela |
+
 ## Fetch
 Argument fetch określa sposób, w jaki powiązane obiekty są pobierane z bazy. Przyjmuje enum FetchType, który ma dwie wartości:
 * `EAGER` – obiekty powiązane z użyciem tego FetchType będą automatycznie wyciągane z bazy przez Hibernate, przy wczytaniu obiektu bazowego
@@ -452,6 +460,21 @@ private final List<Movie> movies =  new ArrayList<>();
 ```
 Rozwiązanie, dodać adnotacje `@JsonIgnore` do jednego z pól.
 
+* 1 + N
+```java
+
+class Message {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private User author;
+
+}
+```
+przy próbie wyświetlenia wszystkich wiadomości danego autora zostanie wykonanych: 1 + N zapytań
+
+Rozwiązanie:
+ustawienie `FetchType.EAGER` lub nadpisać własnym zapytaniem
 
 
 ## Cache
