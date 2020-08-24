@@ -695,6 +695,14 @@ KOD POWINIEN BYĆ:
 **You aren't gonna need it**<BR>
 Nie twórz na przyszłość.
 
+#### Parsowanie XML
+* `DOM`: jest wczytywane w całości do pamięci i odpowiednimi metodami możemy wyciągać z niego informacje nas interesujące
+* `SAX`: nieudany projekt (sekwencyjne wykonywanie operacji na pliku)
+* `JAXB`: standard, odpowiada za mapowanie xml na klasy i vice versa (wprowadzony w 1.6) 
+
+#### XSD - XML Schema Definition
+opracowany przez W3C standard służący do definiowania struktury dokumentu XML. XML Schema stanowi alternatywę dla DTD
+
 ## ZASOBY ZEWNĘTRZNE:
 - http://toolsqa.com - Baza wiedzy o selenium
 - https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet

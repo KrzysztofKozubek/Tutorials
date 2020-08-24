@@ -84,3 +84,29 @@ function isPowerOf2(n) {
 	return false
 }
 ```
+
+## Kryptografia
+Dziedzina wiedzy o przekazywaniu informacji w sposób zabezpieczony przed niepowołanym dostępem.
+* `symetryczna`: do zaszyfrowania oraz odszyfrowania używa się tego samego klucza. Wiadomości może zostać podzielony na bloki o długości 64/128/256 bitów lub strumień.
+* `asymetryczna`: polega na wykorzystaniu klucza publicznego osoby, do której przesyłana jest wiadomość, natomiast do odszyfrowania osoba ta używa własnego, prywatnego klucza.
+
+## Solenie haseł:
+Jest to dodanie ciągu znaku do hasła.
+
+Sposób złamania:
+* metoda tablicowa
+* metoda tęczowych tablic
+* brood force (nie pomaga solenie na tą metodę)
+
+Przykład zastosowania Linux `/etc/shdow` [more here](https://www.cyberciti.biz/faq/understanding-etcshadow-file/)
+
+## SQL Injection
+Jest to wysłanie zapytania w języku SQL poprzez aplikacje, które zostałanie wykonane na bazie danych.
+
+## HTTPS Hypertext Transfer Protocol Secure (SSL).
+To zabezpieczona wersja protokołu http, którego zadaniem jest szyfrowanie przesyłanych informacji pomiędzy serwerem a klientem przy użyciu protokołu SSL / TLS. W rezultacie dzięki HTTPS poufne dane są zabezpieczone i trudniejsze do przechwycenia, odczytania i zmiany.
+
+* `Nawiązywane połączenia`:
+Proces ten nosi nazwę `TLS handshake` i odpowiada za nawiązanie bezpiecznego połączenia po wymianie kluczy publicznych między klientem a serwerem.
+Po wykonaniu TCP handshake ustanawiane jest bezpieczne połączenie pomiędzy klientem a serwerem.
+<img src="https://www.cloudflare.com/resources/images/slt3lc6tev37/5aYOr5erfyNBq20X5djTco/3c859532c91f25d961b2884bf521c1eb/tls-ssl-handshake.png">
