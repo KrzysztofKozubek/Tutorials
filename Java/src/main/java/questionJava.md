@@ -606,6 +606,65 @@ try {
 }
 ```
 
+#### ForkJoinPool
+Pula ta służy do realizacji zadań, które da się podzielić. Do podziału problemów stosuje ona algorytm dziel i zwyciężaj, a te podzielone zadania przydzielane są dzięki wykorzystaniu algorytmu Work-Stealing.
+Jeśli mamy podzielone zadania, trafiają one na kolejkę. Teraz obsługą tych zadań zajmuje się algorytm Work-Stealing, który przydziela zadania wątkom aktualnie bezrobotnym. Kradną więc one pracę innym wątkom:
+
+Pulę tę możemy tworzyć sami poprzez:
+```java
+ForkJoinPool pool = new ForkJoinPool(parallelism);
+
+// Task which return result
+class Task extends RecursiveTask<Integer> {
+    protected Integer compute() {
+        return null;
+    }
+}
+
+// Task which do not return result
+class Task extends RecursiveAction {
+    protected void compute() {
+    }
+}
+
+//Example:
+class Sum extends RecursiveTask<Long> {
+
+    private final int[] numbersToSum;
+    private int low;
+    private int high;
+
+    Sum(int[] numbersToSum) {
+        this.numbersToSum = numbersToSum;
+        this.high = numbersToSum.length - 1;
+    }
+
+    private Sum(int[] numbersToSum, int low, int high) {
+        this.numbersToSum = numbersToSum;
+        this.low = low;
+        this.high = high;
+    }
+
+    private boolean isSimple() {
+        return high - low <= 1;
+    }
+
+    protected Long compute() {
+        if (isSimple()) {
+            return (long) numbersToSum[high] + numbersToSum[low];
+        }
+
+        int mid = low + (high - low) / 2;
+        Sum left = new Sum(numbersToSum, low, mid);
+        Sum right = new Sum(numbersToSum, mid, high);
+
+        left.fork();
+        System.out.println(Thread.currentThread().getName());
+        return right.compute() + left.join();
+    }
+}
+
+```
 ## OOP
 #### Co to jest polimorfizm?
 Jest koncepcją gdzie zachowanie obiektu jest różne w zależności od danej sytuacji.
