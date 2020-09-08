@@ -636,7 +636,7 @@ class Sum extends RecursiveTask<Long> {
 
     Sum(int[] numbersToSum) {
         this.numbersToSum = numbersToSum;
-        this.high = numbersToSum.length - 1;
+        this.high = numbersToSum.length;
     }
 
     private Sum(int[] numbersToSum, int low, int high) {
@@ -646,7 +646,7 @@ class Sum extends RecursiveTask<Long> {
     }
 
     private boolean isSimple() {
-        return high - low <= 1;
+        return (high - low) <= 1;
     }
 
     protected Long compute() {
