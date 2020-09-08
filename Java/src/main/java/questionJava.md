@@ -414,6 +414,22 @@ Możemy dowolnie wybrać nazwę parametru.
 Warto jednak pamiętać, że istnieje pewna konwencja nazewnictwa i tak: 
 `E — Element`, `K — Key`, `N — Number`, `T — Type`, `V — Value`, `S`,`U`,`V` etc. — drugi, trzeci, czwarty parametr).
 
+```java
+class Foo {
+    static <T> T foo1 (T a, Class<T> s) {
+        return a;
+    }
+    static <T extends Number> T foo2 (T a, Class<T> s) {
+        return a;
+    }
+    public static void main(String[] args) {
+        Foo.<String>foo1("Test", String.class);
+        Foo.<Integer>foo2(123, Integer.class);
+    }
+}
+
+```
+
 Ograniczenie typu generycznego:
 ```java
 interface A {}
@@ -478,8 +494,13 @@ procesora na każdy z nich).
 - Wszystkie wątki dzielą jedną pamięć w ramach tego samego procesu. Dlatego są łatwiejsze/szybsze
 do utworzenia / zamknięcia, niż procesy.
 
+#### Programowanie współbieżne
+Pozwala na podzielenie programu na oddzielne, wykonywane niezależnie zadania. 
+W modelu wielowątkowości każde z tych niezależnych zadań posiada własny wątek wykonywania.
+
 #### słowo kluczowe volatile
-volatile sprawia iż dana wartość będzie zapisana w danej pamięci tak szybko jak to, możliwe
+volatile sprawia iż dana wartość będzie zapisana w danej pamięci tak szybko jak to, możliwe.
+jest to informacja dla Java żeby danej zmiennej nie optymalizować.
 
 #### Jak utworzyć wątek? Jak go zatrzymać? 
 https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
@@ -499,6 +520,7 @@ executor.submit(() -> {
 });
 
 Example 3:
+// task impl interface Callable
 Future<Integer> future = executor.submit(task);
 Integer result = future.get();
 
@@ -506,6 +528,34 @@ Remember about shutdown executor
 ```
 
 #### Jak synchronizować wątki? Omów słowo kluczowe **synchronized**
+
+```java
+Runnable r = () -> {
+    Thread.currentThread().setPriority(Thread.MAX_PRIORITY); <- ustawienie priorytetu wątka
+    // ... complicated operation
+    Thread.yield(); <- sugestia do wykonywania przez wątek innego zadania
+    thread2.join(); <- oczekiwanie na zakończenie pracy wątku thread2
+}
+```
+
+#### Jak złapać wyjątek w innym wątku
+```java
+final AtomicReference<Exception> exception = new AtomicReference<Exception>();
+Thread thread = library.someMethod(new Runnable() {
+   public void run() {
+      try {
+         throw new NullPointerException();
+      } catch (Exception e) {
+         exception.set(e);
+      }
+   }
+});
+
+thread.join();
+if (exception.get() != null) {
+   throw exception.get();
+}
+```
 
 #### Jak działają metody **wait()**, **notify()**, **notifyAll()**
 Metody możliwe do wykonania na obiekcie
