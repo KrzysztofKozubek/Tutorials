@@ -728,21 +728,50 @@ Tu jest wszystko: https://refactoring.guru/design-patterns/catalog
 
 **PRZYKŁADY:**
 - KREACYJNE (creational)
-  - Singleton
-  - Factory method
-  - Abstract factory
-  - Builder
+  - Fabryka abstrakcyjna (używamy tam gdzie chcemy odciąć się od tworzenia instancji klasy konkretnego typu)
+  - Budowniczy (pozwala na budowanie obiektu w kilku etapach)
+  - Metoda wytwórcza (Udostępnia interfejs do tworzenia obiektów w klasie bazowej, ale pozwala podklasom zmieniać typ tworzonych obiektów)
+  - Prototyp (Umożliwia kopiowanie istniejących obiektów bez tworzenia zależności pomiędzy twoim kodem, a ich klasami)
+  - Singleton (jedna instancja danego obiektu w apk)
 - STRUKTURALNE (structural)
-  - Facade
-  - Proxy
-  - Decorator
-  - Composite
+  - Adapter (Zachowanie kompatybilności z starszym/nowym interfejsem)
+  - Most (Rozdziela abstrakcje od implementacji)
+  - Kompozyt (Utworzenie obiektów w tzw struktury drzewiaste)
+  - Dekorator (dodania istniejącej klasie, nowe zachowanie, ale nie zmienia działania klasy podstawowej)
+  - Fasada (ułatwia dostęp do różnych obiektów i ukrywa szczegóły implementacji)
+  - Pyłek (ograniczenie zajmowanej pamięci przez wiele obiektów)
+  - Pełnomocnik (kontrolowanego tworzenia na żądanie kosztownych obiektów oraz kontroli dostępu do nich)
 - CZYNNOŚCIOWE (behavioral)
-  - Observer
-  - Visitor
-  - Iterator
-  - Strategy
-
+  - Łańcuch zobowiązań (Pozwala przekazywać żądania według łańcucha obiektów obsługujących)
+  - Iterator (Pozwala przechodzić sekwencyjnie po elementach zbioru bez konieczności eksponowania jego formy (lista, stos, drzewo))
+  - Mediator (Wzorzec ogranicza bezpośrednią komunikację pomiędzy obiektami i zmusza je do współpracy wyłącznie za pośrednictwem obiektu mediatora)
+  - Obserwator (Pozwala zdefiniować mechanizm subskrypcji by powiadamiać wiele obiektów o zdarzeniach odbywających się w obserwowanym obiekcie)
+  - Stan (obiekt zmiena swoje zachowanie gdy zmieni się jego wewnętrzny stan)
+  - Strategia (Pozwala zdefiniować rodzinę algorytmów, umieścić je w osobnych klasach i uczynić obiekty tych klas wymienialnymi)
+  - Metoda szablonowa (Definiuje szkielet algorytmu w klasie bazowej, ale umożliwia podklasom nadpisanie poszczególnych etapów algorytmu bez konieczności zmiany jego struktury)
+  - Odwiedzający (Pozwala oddzielić algorytmy od obiektów na których pracują)
+- Inne 
+  - API Gateway
+    - security – decyduje, czy zapytanie może być “wpuszczone” do systemu
+    - zarządzanie ruchem – routing na podstawie URI
+    - testowanie – możemy kierować ruchem na nowe usługi w celu przetestowania (na przykład canary release)
+    - eksperymenty – daje nam możliwość eskperymetowania z przekierowywaniem ruchu
+    - wstrzykiwanie danych – możemy dodawać dane do żądań (na przykład do nagłówków)
+    - monitoring – na podstawie tego serwisu mamy wgląd do tego jak ruch jest rozdzielany oraz co dzieję się w systemie
+    - wstrzykiwanie błędów – możemy na przykład wstrzykiwać złe nagłówki i obserwować jak odpowie na to system
+    - odporność – jeśli któryś z serwisów będzie niedostępny, gateway może przekierować ruch na działające instancje.
+  - Circuit breakers
+    - ma na celu zminimalizowanie efektu, gdy część usług nie odpowiada, a wiele klientów chce do nich uzyskać dostęp.
+    - W przypadku, gdy mamy setki wywołań, wtedy lepiej, gdy np. pierwszy klient ostrzeże innych o tym, że i tak nie ma sensu łączyć się z daną usługą, ponieważ ona nie odpowiada.
+    - Obwód zamknięty – normalny tryb pracy. 
+    - Obwód otwarty – jeśli proxy jest w tym stanie, to znaczy, że dopuszczalna liczba nieudanych połączeń została przekroczona
+    - Półotwarty -  dopuszczanie ograniczonej liczby zapytań, które będą stanowić tak naprawdę test usług
+  - Load balancing
+    - jest urządzeniem lub oprogramowaniem, przekierowującym żądania TCP/IP do odpowiednich serwerów, które tworzą klaster webowy lub tzw. farmę
+    - celem jest rozdzielenie ruchu siecowego równomiernie na wszystkie serwery
+  - Service discovery 
+    - to serwis, który umożliwia rejestrowanie się nowych serwisów, jak i udostępnianie informacji o zarejestrowanych użytkownikach. Często są to implementacje wzorca klucz-wartosc, od którego wymagana jest duża niezawodność i szybkość
+    
 #### Co daje użycie Buildera vs settery w obiekcie? 
 Niemutowalność, co za tym idzie obiekt jest thread safe. Dodatkowo przy dużej liczbie podobnych obiektów poprawia wydajność.
 
