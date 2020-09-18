@@ -137,8 +137,8 @@ OFFHEAP {
 + mniej pamieci potrzebuja
 
 #### Jakie rzeczy są zapisywane na stercie, a jakie na stosie?
-- STOS (Stack)- typy proste, wskaźniki do obiektów, wskaźniki powrotu z funkcji.
-- STERTA (Heap)- Obiekty i typy złożone
+- STOS (Stack) - typy proste, wskaźniki do obiektów, wskaźniki powrotu z funkcji (jedna na wątek).
+- STERTA (Heap) - Obiekty i typy złożone
 
 #### Jakie znasz typy w JAVIE
 **TYPY PROSTE**
@@ -200,7 +200,24 @@ int integer = (int)boxedInteger;
 ```
 
 ### Metody klasy java.lang.Object
-clone, equals, finalize, hashcode, notify, notifyAll, wait, toString
+* clone (dostępny po implementacji Cloneable)
+* equals (porównuje referencje)
+```java
+public boolean equals(Object obj) {
+    return (this == obj);
+}
+```
+* finalize (metoda wykonywana przed zabiciem obiektu)
+* hashcode (wyliczenie hash kodu z referencji)
+* notify (wybudzenie obiektu)
+* notifyAll (wybudzenie wszystkich obiektów)
+* wait (oczekiwanie)
+* toString
+```java
+public String toString() {
+    return getClass().getName() + "@" + Integer.toHexString(hashCode());
+}
+```
 
 #### Co to jest serializacja
 Serializacja to zamiana obiektów, np. w strumień bajtów z zachowaniem ich aktualnego stanu
@@ -357,6 +374,13 @@ Wiele kluczy może zwrócić ten sam **hashcode** - stąd pod danym indeksem mo�
 Podczas pobierania zasobu z ```map.get(key)```, znowu liczony jest hashcode, wybierany bucket. Jeśli nie ma kolizji - zwracany jest obiekt. Jeśli jest kolizja, wyszukiwany jest odpowiedni wpis na liście (korzystając z metody ```.equals()```).
 Zapewnia to osiągnięcie złożoności obliczeniowej przy pobieraniu obiektu: ```O(1)```.
 
+Parametry: 
+```java
+DEFAULT_INITIAL_CAPACITY = 16 <- ilość bucketów
+DEFAULT_LOAD_FACTOR = 0.75f   <- zapełnienie powodujące dodanie bucketów (* 2)
+
+```
+
 ### Różnica pomiędzy interfejsami Iterator oraz ListIterator
 - ListIterator pozwala na przeszukiwanie listy w obie strony
 - ListIterator może być używany tylko do List. 
@@ -440,6 +464,7 @@ class D<T extends B & C> {}
 //correct: new D<Y>()
 //incorrect: new D<A>()
 ```
+Generyki podczas kompilacji są usuwane i zmienieane na typ `Object`, spodowowane to było koniecznością kompatybilności z poprzednimi wersjami.
 
 https://docs.oracle.com/javase/tutorial/extra/generics/morefun.html
 
