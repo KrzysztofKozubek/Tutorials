@@ -43,6 +43,17 @@ algo działania:
 - markuje wszystkie obiekty które są widoczne bezpośrenio lub pośrednio od obiektu root (w tym ele root) jako żywe
 - obiekty nieposiadające zamarkowania jako żywe zostają usunięte
 
+algo znajdowania ele root:
+Garbage Collector Roots to obiekty osiągalne spoza sterty, czyli takie,
+do których możemy odwołać się w sposób bezpośredni, a nie tylko poprzez łańcuch referencji.
+```java
+
+SystemUser user = new SystemUser("mmarczak");
+user.creationDate = LocalDateTime.now();
+```
+W powyższym przykładzie user traktowany jest jako GC Root, ale user.creationDate już nie, 
+ponieważ aby użyć tego obiektu potrzebujemy referencji do usera.
+
 Przez fakt że obiekty często są tworzone i uswane mogło by dojść do sytuacji gdzie mimo 10MB wolnego miejsca w pamięci nie jesteśmy w stanie stworzyć obiektu 3MB
 
 ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) ![#c5f015](https://placehold.it/15/c5f015/000000?text=+)
