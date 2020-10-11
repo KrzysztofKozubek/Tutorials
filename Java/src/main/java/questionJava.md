@@ -808,10 +808,10 @@ Tu jest wszystko: https://refactoring.guru/design-patterns/catalog
     - W przypadku, gdy mamy setki wywołań, wtedy lepiej, gdy np. pierwszy klient ostrzeże innych o tym, że i tak nie ma sensu łączyć się z daną usługą, ponieważ ona nie odpowiada.
     - Obwód zamknięty – normalny tryb pracy. 
     - Obwód otwarty – jeśli proxy jest w tym stanie, to znaczy, że dopuszczalna liczba nieudanych połączeń została przekroczona
-    - Półotwarty -  dopuszczanie ograniczonej liczby zapytań, które będą stanowić tak naprawdę test usług
+    - Półotwarty - dopuszczanie ograniczonej liczby zapytań, które będą stanowić tak naprawdę test usług
   - Load balancing
     - jest urządzeniem lub oprogramowaniem, przekierowującym żądania TCP/IP do odpowiednich serwerów, które tworzą klaster webowy lub tzw. farmę
-    - celem jest rozdzielenie ruchu siecowego równomiernie na wszystkie serwery
+    - celem jest rozdzielenie ruchu sieciowego równomiernie na wszystkie serwery
   - Service discovery 
     - to serwis, który umożliwia rejestrowanie się nowych serwisów, jak i udostępnianie informacji o zarejestrowanych użytkownikach. Często są to implementacje wzorca klucz-wartosc, od którego wymagana jest duża niezawodność i szybkość
     
@@ -850,6 +850,14 @@ class CompositionClass {
   - klasa może implementować interfejsy
   - klasa może rozszerzać klasę
   
+#### Co to jest czysty kod?
+Jest to kod, który jest:
+- prosty (napisany najprościej jak to jest możliwe)
+- elegancji (dobrze sformatowany; dobrze nazwane klasy, metody)
+- bezpośredni (rozwiązuje dany problem)
+- możliwie łatwy do zmiany i dodawania nowych funkcjonalności
+- posiadający napisane testy i dokumentację
+- pisany zgodnie, ze wzorcami projektowymi i dobrymi praktykami (SOLID)
 
 #### Omów zasady SOLID
 https://hackernoon.com/solid-principles-made-easy-67b1246bcdf
@@ -857,7 +865,7 @@ https://hackernoon.com/solid-principles-made-easy-67b1246bcdf
 
 - **O**pen-Closed Principle - Projekt powinien być otwarty na rozszerzanie i zamknięty na modyfikacje. Zamiast modyfikować klasę raczej powinniśmy ją rozszerzać, jednocześnie bazując na abstrakcji aniżeli konkretnych implementacjach.
 
-- **L**iskov Substitution Principle - Jeśli w danym miejscu programu oczekujemy jakiegośkonkretnego typu obiektu (np. Animal), to powinniśmy mieć możliwość użycia tam dowolnego jego podtypu np. Cat, Mouse itp.
+- **L**iskov Substitution Principle - Jeśli w danym miejscu programu oczekujemy jakiegoś konkretnego typu obiektu (np. Animal), to powinniśmy mieć możliwość użycia tam dowolnego jego podtypu np. Cat, Mouse itp.
 
 - **I**nterface Segregation Principle - Krótko: Użytkownik nie powinien być zmuszony do implementowania metod których nie używa. Lepiej więcej małych Interfejsów niż jeden duży. Celem są proste i krótkie interfejsy przeznaczone do jednego celu (SRP). Ograniczy to powstawanie niepotrzebnych zależności w projekcie.
 
@@ -889,7 +897,3 @@ opracowany przez W3C standard służący do definiowania struktury dokumentu XML
 - https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet
 - https://www.geeksforgeeks.org/functional-interfaces-java/ - JAVA Functional interfaces
 - https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/ - JAVA Streams
-
-```puml
-A -> B
-```
