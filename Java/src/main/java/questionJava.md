@@ -320,7 +320,7 @@ Zwraca ona liczbę ```int``` specyficzną dla każdego obiektu.
 Konrakt mówi, że:
 Kolejne wywołania hashCode muszą zwracać ten sam wynik.
 - Jeżeli obiekty są ```równe```, wg metody ```equals```, ich ```hashCode``` również musi być ```równy```.
-- Jeżeli obiekty są ```różne```, to ich hashCode może być ```równy```.
+- Jeżeli hashCode jest ten sam, to ```equals``` nie musi zwrócić `true`.
 - Relacja wyznaczona metodą equals musi być ```zwrotna``` | ```x!=null x.equals(x) = true```.
 - Relacja wyznaczona metodą equals musi być ```symetryczna``` | ```x.equals(y) = y.equals(x)```.
 - Relacja wyznaczona metodą equals musi być ```przechodnia``` | ```x.equals(y) & y.equals(z) => z.equals(x)```.
@@ -393,17 +393,17 @@ DEFAULT_LOAD_FACTOR = 0.75f   <- zapełnienie powodujące dodanie bucketów (* 2
 ```
 
 ### Różnica pomiędzy interfejsami Iterator oraz ListIterator
-- ListIterator pozwala na przeszukiwanie listy w obie strony
+- ListIterator pozwala na przeszukiwanie listy w obie strony.
 - ListIterator może być używany tylko do List. 
-- Ponadto ListIterator pozwala również na dodawanie elementów, oraz zmianę ich wartości
+- Ponadto ListIterator pozwala również na dodawanie elementów oraz zmianę ich wartości.
 
 ### Różnica pomiędzy HashMap i Hashtable?
-- Hashtable jest zsynchronizowane
-- Hashtable nie zezwala na używanie wartości null jako klucza i wartości
-- HashMap do Iteracji poprzez wartości obiektów wykorzystuje Iterator, natomiast Hashtable enumerator
-- HashMap jest dużo szybszy niż Hashtable
+- Hashtable jest zsynchronizowane.
+- Hashtable nie zezwala na używanie wartości null jako klucza i wartości.
+- HashMap do Iteracji poprzez wartości obiektów wykorzystuje Iterator, natomiast Hashtable enumerator.
+- HashMap jest dużo szybszy niż Hashtable.
 
-<B>Warto zwrócić uwagę że Hashtable może być również zastąpiony przy pomocy ```ConcurrentHashMap```<B>
+<B>Warto zwrócić uwagę, że Hashtable może być również zastąpiony przy pomocy ```ConcurrentHashMap```<B>
 
 ## WYJĄTKI
 #### Omów podstawowe klasy wyjątków i ich hierarchię
@@ -475,18 +475,20 @@ class D<T extends B & C> {}
 //correct: new D<Y>()
 //incorrect: new D<A>()
 ```
-Generyki podczas kompilacji są usuwane i zmienieane na typ `Object`, spodowowane to było koniecznością kompatybilności z poprzednimi wersjami.
+Generyki podczas kompilacji są usuwane i zmieniane na typ `Object`, spowodowane to było koniecznością kompatybilności z poprzednimi wersjami.
 
 https://docs.oracle.com/javase/tutorial/extra/generics/morefun.html
 
 #### Wyrażenie lambda
-Dla uproszczenia można powiedzieć, że wyrażenie lambda jest metodą1. Metodą, którą możesz przypisać do zmiennej. Możesz ją także wywołać czy przekazać jako argument do innej metody.
-Na przykład wyrażenie lambda, które podnosi do kwadratu przekazaną liczbę wygląda następująco:
+Dla uproszczenia można powiedzieć, że wyrażenie lambda jest metodą. 
+Metodą, którą możesz przypisać do zmiennej. 
+Możesz ją także wywołać czy przekazać jako argument do innej metody.
+Na przykład wyrażenie lambda, które podnosi do kwadratu przekazaną liczbę, wygląda następująco:
 
 ```java
 x -> x * x
 ```
-Wyrażenie lambda ma następującą składnię
+Wyrażenie lambda ma następującą składnię:
 ```java
 <lista parametrów> -> <ciało wyrażenia>
 ```
@@ -494,7 +496,7 @@ Jest to instancja dowolnego interfejsu funkcyjnego.
 
 ## Functional interfaces
 to interfejs posiadający 1 abstrakcyjną metodę. Oznacza się interfejsem `@FunctionalInterface`.
-Wiekszość tych interfejsów znajduje się w pakiecie `java.util.function`:
+Większość tych interfejsów znajduje się w pakiecie `java.util.function`:
 - `Function<T, R>` przyjmuje `T` i zwraca `R` metodą `apply()`
 - `Consumer<T>` 
 - `Predicate<T>` przyjmuje `T` i zwraca flagę metodą `test()`
@@ -502,11 +504,13 @@ Wiekszość tych interfejsów znajduje się w pakiecie `java.util.function`:
 - `UnaryOperatot<T>` przyjmuje i zwraca `T`
 
 #### Stream
-wprowadzenie przez java do programowania funkcyjnego. Służą do przetwarzania danych. Zawierają dane i pozwalają na opisanie co chcesz zrobić tymi danymi.
-Strumienie wykorzystują wzorzec łączenie metod (method chaining), zwanym także płynnym interfejsce, (fluent interface)
+wprowadzenie przez java do programowania funkcyjnego. 
+Służą do przetwarzania danych. 
+Zawierają dane i pozwalają na opisanie co chcesz zrobić z tymi danymi.
+Strumienie wykorzystują wzorzec łączenie metod (method chaining), zwanym także płynnym interfejsie (fluent interface).
 Strumienie możemy podzielić na trzy typy:
 - tworzenia strumienia
-- przetwarzania danych wew strumienia
+- przetwarzania danych wew. strumienia
 - zakończenie strumienia
 
 ## WĄTKI
@@ -517,10 +521,10 @@ PROCESY:
   - Pamięć operacyjna
   - Uchwyty do plików
   - połączenia HTTP (port), urządzenia wejścia/wyjścia, itp.
-- Proces zawsze posiada conajmniej jeden wątek.
-- Każdy proces może mieć podprocesy
-  - **proces-rodzic** ma dostęp do wszystkich zasobów swoich podprocesów
-  - **podproces** ma dostęp tylko do swoich zasobów
+- Proces zawsze posiada co najmniej jeden wątek.
+- Każdy proces może mieć pod procesy.
+  - **proces-rodzic** ma dostęp do wszystkich zasobów swoich pod procesów.
+  - **pod proces** ma dostęp tylko do swoich zasobów.
 
 WĄTKI:
 - Jeden wątek -> Jeden ciąg instrukcji procesora
@@ -535,8 +539,8 @@ Pozwala na podzielenie programu na oddzielne, wykonywane niezależnie zadania.
 W modelu wielowątkowości każde z tych niezależnych zadań posiada własny wątek wykonywania.
 
 #### słowo kluczowe volatile
-volatile sprawia iż dana wartość będzie zapisana w danej pamięci tak szybko jak to, możliwe.
-jest to informacja dla Java żeby danej zmiennej nie optymalizować.
+volatile sprawia, iż dana wartość będzie zapisana w danej pamięci tak szybko jak to możliwe.
+jest to informacja dla Java, żeby danej zmiennej nie optymalizować.
 
 #### Jak utworzyć wątek? Jak go zatrzymać? 
 https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
@@ -643,8 +647,11 @@ try {
 ```
 
 #### ForkJoinPool
-Pula ta służy do realizacji zadań, które da się podzielić. Do podziału problemów stosuje ona algorytm dziel i zwyciężaj, a te podzielone zadania przydzielane są dzięki wykorzystaniu algorytmu Work-Stealing.
-Jeśli mamy podzielone zadania, trafiają one na kolejkę. Teraz obsługą tych zadań zajmuje się algorytm Work-Stealing, który przydziela zadania wątkom aktualnie bezrobotnym. Kradną więc one pracę innym wątkom:
+Pula ta służy do realizacji zadań, które da się podzielić. 
+Do podziału problemów stosuje ona algorytm dziel i zwyciężaj, a te podzielone zadania przydzielane są dzięki wykorzystaniu algorytmu Work-Stealing.
+Jeśli mamy podzielone zadania, trafiają one na kolejkę. 
+Teraz obsługą tych zadań zajmuje się algorytm Work-Stealing, który przydziela zadania wątkom aktualnie bezrobotnym. 
+Kradną więc one pracę innym wątkom:
 
 Pulę tę możemy tworzyć sami poprzez:
 ```java
@@ -882,3 +889,7 @@ opracowany przez W3C standard służący do definiowania struktury dokumentu XML
 - https://learncodethehardway.org/unix/bash_cheat_sheet.pdf - BASH Cheatsheet
 - https://www.geeksforgeeks.org/functional-interfaces-java/ - JAVA Functional interfaces
 - https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/ - JAVA Streams
+
+```puml
+A -> B
+```
