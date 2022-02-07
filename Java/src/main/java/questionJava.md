@@ -355,7 +355,7 @@ final class A { nie można dzinedziczyć (extends)
 
 ## KOLEKCJE
 #### Jakie znasz kolekcje w JAVA. Podstawowy podział
-<img src="https://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png"/>
+<img src="https://github.com/KrzysztofKozubek/Tutorials/blob/java/images/collections.png?raw=true"/>
 
 #### Iterator
 Iterator jest to interfejs który udostępnia metody potrzebne do iterowania poprzez każdą z kolekcji. 
@@ -408,7 +408,7 @@ DEFAULT_LOAD_FACTOR = 0.75f   <- zapełnienie powodujące dodanie bucketów (* 2
 ## WYJĄTKI
 #### Omów podstawowe klasy wyjątków i ich hierarchię
 Podstawowy podział:
-<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg">
+<img src="https://github.com/KrzysztofKozubek/Tutorials/blob/java/images/exceptions.jpg?raw=true">
 
 #### Czym różni się **Exception** od **Error**? 
 - Error zwykle nie zależy od programisty. Sygnalizuje awarię, której programista nie może / nie powinien obsługiwać w kodzie jak: **StackOverflowError**, czy **OutOfMemoryError**. 
